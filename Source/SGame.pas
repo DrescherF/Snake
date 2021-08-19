@@ -17,7 +17,6 @@ type
     Label4: TLabel;
     Spielfeld: TStringGrid;
     TimerTick: TTimer;
-    procedure FormDestroy(Sender: TObject);
     procedure TimerTickTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
@@ -49,24 +48,30 @@ begin
     for j := 0 to Spielfeld.RowCount - 1 do
     begin
       case (FGameEngine.Cells[i, j]) of
-        1:
-          Spielfeld.Cells[i, j] := 'X';
-        2:
-          Spielfeld.Cells[i, j] := 'O';
         0:
           Spielfeld.Cells[i, j] := '';
+        1:
+          Spielfeld.Cells[i, j] := 'F';
+        2:
+          Spielfeld.Cells[i, j] := 'X';
+      else
+        begin
+          Spielfeld.Cells[i, j] := 'X';
+        end;
       end;
     end;
   end;
+  for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
+  begin
+    Spielfeld.Cells[FGameEngine.Snake.Tail[i].X,
+      FGameEngine.Snake.Tail[i].Y] := '+';
+  end;
+  Spielfeld.Cells[FGameEngine.Snake.X, FGameEngine.Snake.Y] := 'O';
 end;
 
 procedure TFormSGame.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   TimerTick.Enabled := false;
-end;
-
-procedure TFormSGame.FormDestroy(Sender: TObject);
-begin
   FGameEngine.Free;
 end;
 
@@ -92,10 +97,8 @@ begin
 
   FGameEngine := TGameEngine.Create(Settings.ColCount, Settings.RowCount);
 
-  FGameEngine.SnakeX := Settings.StartX;
-  FGameEngine.SnakeY := Settings.StartY;
   FGameEngine.SnakeLives := true;
-  FGameEngine.Snake();
+  FGameEngine.PlaceFood();
 
   FillStringGrid();
 

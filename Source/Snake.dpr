@@ -7,7 +7,9 @@ uses
   SGame in 'SGame.pas' {FormSGame},
   Snake.GameEngine in 'Snake.GameEngine.pas',
   Snake.settings in 'Snake.settings.pas',
-  SGameOver in 'SGameOver.pas' {FormGameOver};
+  SGameOver in 'SGameOver.pas' {FormGameOver},
+  Snake.Types in 'Snake.Types.pas',
+  Snake.Snake in 'Snake.Snake.pas';
 
 {$R *.res}
 

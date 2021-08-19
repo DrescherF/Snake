@@ -13,7 +13,6 @@ object FormSGame: TFormSGame
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
-  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96

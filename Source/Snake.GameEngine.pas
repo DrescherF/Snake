@@ -3,34 +3,34 @@ unit Snake.GameEngine;
 interface
 
 uses
-  Snake.Types;
+  Snake.Types, Snake.settings, Snake.Snake;
 
 type
   TGameEngine = class
 
   private
     FSpielfeld: Array of Array of Integer;
+    FSnake: TSnake;
     FColCount, FRowCount: Integer;
     function GetValue(ACol, ARow: Integer): Integer;
     procedure SetValue(ACol, ARow: Integer; const Value: Integer);
 
   public
-    constructor Create(AColCount, ARowCount: Integer);
-    property Cells[ACol, ARow: Integer]: Integer read GetValue write SetValue;
-    procedure Snake();
-    procedure SnakeMove();
-
-  var
-    SnakeX: Integer;
-    SnakeY: Integer;
     SnakeLives: Boolean;
-
-  var
     ED: Snake.Types.TEntityDirection;
+    constructor Create(AColCount, ARowCount: Integer);
+    destructor Destroy(); Override;
+    property Cells[ACol, ARow: Integer]: Integer read GetValue write SetValue;
+    procedure SnakeMove();
+    procedure PlaceFood();
+    property Snake: TSnake read FSnake;
 
   end;
 
 implementation
+
+uses
+  System.SysUtils;
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
 
@@ -38,6 +38,7 @@ var
   i, j, k: Integer;
 
 begin
+  FSnake := TSnake.Create(settings.StartX, settings.StartY);
   FColCount := AColCount;
   FRowCount := ARowCount;
 
@@ -62,10 +63,34 @@ begin
 
 end;
 
+destructor TGameEngine.Destroy;
+begin
+  FreeAndNil(FSnake);
+  inherited;
+end;
+
 function TGameEngine.GetValue(ACol, ARow: Integer): Integer;
 begin
   result := FSpielfeld[ACol, ARow];
 end;
+
+procedure TGameEngine.PlaceFood;
+var
+  i, j: Integer;
+begin
+  i := Random(FColCount - 1);
+  j := Random(FRowCount - 1);
+
+  if Cells[i, j] = 0 then
+  begin
+    Cells[i, j] := 1;
+  end
+  else
+  begin
+    PlaceFood;
+  end;
+end;
+
 
 procedure TGameEngine.SetValue(ACol, ARow: Integer; const Value: Integer);
 begin
@@ -74,76 +99,15 @@ begin
 
 end;
 
-procedure TGameEngine.Snake;
-
-var
-  i, j: Integer;
-
-begin
-  i := SnakeX;
-  j := SnakeY;
-
-  Cells[i, j] := 1;
-
-end;
-
 procedure TGameEngine.SnakeMove;
 
 begin
-  case ED of
-    edRight:
-      begin
-        if (Cells[SnakeX + 1, SnakeY] = 1) then
-        begin
-          SnakeLives := false;
-        end
-        else
-        begin
-          Cells[SnakeX, SnakeY] := 0;
-          inc(SnakeX);
-          Cells[SnakeX, SnakeY] := 1;
-        end;
-      end;
-    edDown:
-      begin
-        if (Cells[SnakeX, SnakeY + 1] = 1) then
-        begin
-          SnakeLives := false;
-        end
-        else
-        begin
-          Cells[SnakeX, SnakeY] := 0;
-          inc(SnakeY);
-          Cells[SnakeX, SnakeY] := 1;
-        end;
-      end;
-    edLeft:
-      begin
-        if (Cells[SnakeX - 1, SnakeY] = 1) then
-        begin
-          SnakeLives := false;
-        end
-        else
-        begin
-          Cells[SnakeX, SnakeY] := 0;
-          dec(SnakeX);
-          Cells[SnakeX, SnakeY] := 1;
-        end;
-      end;
-    edUp:
-      begin
-        if (Cells[SnakeX, SnakeY - 1] = 1) then
-        begin
-          SnakeLives := false;
-        end
-        else
-        begin
-          Cells[SnakeX, SnakeY] := 0;
-          dec(SnakeY);
-          Cells[SnakeX, SnakeY] := 1;
-        end;
-      end;
-  end;
+
+  FSnake.Direction := ED;
+  FSnake.Move;
+  SnakeLives := Cells[FSnake.X, FSnake.Y] = 0;
+
+
 end;
 
 end.

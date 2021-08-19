@@ -10,8 +10,9 @@ type
     constructor Create(); reintroduce;
   private
   public
-  /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
-    ColCount, RowCount, StartX, StartY: Integer;
+    /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
+  var
+    ColCount, RowCount, StartX, StartY, TailLength: Integer;
     class function GetInstance(): TSettings;
     class procedure ReleaseInstance();
 
@@ -37,6 +38,7 @@ begin
   RowCount := 36;
   StartX := 10;
   StartY := 10;
+  TailLength := 2;
 end;
 
 class function TSettings.GetInstance: TSettings;
