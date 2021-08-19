@@ -23,8 +23,13 @@ type
     constructor Create(AX, AY: Integer);
     destructor Destroy(); Override;
     procedure Move();
+    ///<summary> Schlange waechst beim Essen </summary>
+    procedure Grow(Value: Integer);
+    ///<summary> Schaut ob der Punkt auf der Schlange liegt </summary>
+    function Intersects(Coord: TPoint): Boolean;
     property X: Integer read GetX write SetX;
     property Y: Integer read GetY write SetY;
+    property Position: TPoint read FPosition;
     property Direction: TEntityDirection read FDirection write SetDirection;
     property Tail: TList<TPoint> read FTail;
   end;
@@ -37,15 +42,12 @@ uses
 { TSnake }
 
 constructor TSnake.Create(AX, AY: Integer);
-var
-  l: Integer;
 begin
   X := AX;
   Y := AY;
   FTail := TList<TPoint>.Create;
   // 2 Segmente hinzufuegen
-  for l := 0 to settings.TailLength - 1 do
-    FTail.Add(FPosition);
+  Grow(Settings.TailLength);
 end;
 
 destructor TSnake.Destroy;
@@ -62,6 +64,29 @@ end;
 function TSnake.GetY: Integer;
 begin
   result := FPosition.Y;
+end;
+
+procedure TSnake.Grow(Value: Integer);
+var
+  l: Integer;
+begin
+  for l := 0 to Value - 1 do
+    FTail.Add(FPosition);
+end;
+
+function TSnake.Intersects(Coord: TPoint): Boolean;
+var
+  i: Integer;
+begin
+  result:= Coord = FPosition;
+  if result then
+    exit;
+  for i := 0 to FTail.Count - 1 do
+  begin
+    if FTail[i] = Coord then
+      exit(true);
+  end;
+
 end;
 
 procedure TSnake.Move;

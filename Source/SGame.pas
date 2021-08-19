@@ -1,4 +1,4 @@
-unit SGame;
+﻿unit SGame;
 
 interface
 
@@ -61,6 +61,7 @@ begin
       end;
     end;
   end;
+  Spielfeld.Cells[FGameEngine.Food.X,FGameEngine.Food.Y] := '🍔';
   for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
   begin
     Spielfeld.Cells[FGameEngine.Snake.Tail[i].X,

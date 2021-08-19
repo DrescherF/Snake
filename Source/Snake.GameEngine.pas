@@ -3,7 +3,7 @@ unit Snake.GameEngine;
 interface
 
 uses
-  Snake.Types, Snake.settings, Snake.Snake;
+  Snake.Types, Snake.settings, Snake.Snake, Winapi.Windows;
 
 type
   TGameEngine = class
@@ -11,8 +11,11 @@ type
   private
     FSpielfeld: Array of Array of Integer;
     FSnake: TSnake;
+    FFood: TPoint;
     FColCount, FRowCount: Integer;
     function GetValue(ACol, ARow: Integer): Integer;
+    /// <summary>Schaut ob das Feld leer ist</summary>
+    function FieldEmpty(ACol, ARow: Integer): Boolean;
     procedure SetValue(ACol, ARow: Integer; const Value: Integer);
 
   public
@@ -24,13 +27,14 @@ type
     procedure SnakeMove();
     procedure PlaceFood();
     property Snake: TSnake read FSnake;
+    property Food: TPoint read FFood;
 
   end;
 
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, System.Classes;
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
 
@@ -69,6 +73,14 @@ begin
   inherited;
 end;
 
+function TGameEngine.FieldEmpty(ACol, ARow: Integer): Boolean;
+begin
+  result := Cells[ACol, ARow] = 0;
+  if not result then
+    exit;
+  result := not FSnake.Intersects(Point(ACol, ARow));
+end;
+
 function TGameEngine.GetValue(ACol, ARow: Integer): Integer;
 begin
   result := FSpielfeld[ACol, ARow];
@@ -81,16 +93,15 @@ begin
   i := Random(FColCount - 1);
   j := Random(FRowCount - 1);
 
-  if Cells[i, j] = 0 then
+  if FieldEmpty(i, j) then
   begin
-    Cells[i, j] := 1;
+    FFood := Point(i, j);
   end
   else
   begin
     PlaceFood;
   end;
 end;
-
 
 procedure TGameEngine.SetValue(ACol, ARow: Integer; const Value: Integer);
 begin
@@ -106,8 +117,11 @@ begin
   FSnake.Direction := ED;
   FSnake.Move;
   SnakeLives := Cells[FSnake.X, FSnake.Y] = 0;
-
-
+  if FFood = FSnake.Position then
+  begin
+    FSnake.Grow(1);
+    PlaceFood;
+  end;
 end;
 
 end.
