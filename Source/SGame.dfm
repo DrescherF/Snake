@@ -1,6 +1,7 @@
 object FormSGame: TFormSGame
   Left = 0
   Top = 0
+  Align = alClient
   Caption = 'FormSGame'
   ClientHeight = 861
   ClientWidth = 1584
@@ -11,6 +12,7 @@ object FormSGame: TFormSGame
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnShow = FormShow

@@ -39,7 +39,6 @@ procedure TFormSMain.ButtonStartClick(Sender: TObject);
 var
   modalResult: Integer;
 begin
-  //Close;
   modalResult := FormSGame.ShowModal;
 end;
 

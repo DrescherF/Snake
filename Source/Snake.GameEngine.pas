@@ -2,6 +2,9 @@ unit Snake.GameEngine;
 
 interface
 
+uses
+  Snake.Types;
+
 type
   TGameEngine = class
 
@@ -22,11 +25,9 @@ type
     SnakeY: Integer;
     SnakeLives: Boolean;
 
-  type
-    TEntityDirection = (edRight, edDown, edLeft, edUp);
-
   var
-    ED: TEntityDirection;
+    ED: Snake.Types.TEntityDirection;
+
   end;
 
 implementation
@@ -47,7 +48,7 @@ begin
     SetLength(FSpielfeld[i], FRowCount);
   end;
 
-  // Raender befuellen (als Wand für die Spielwelt
+  // Raender befuellen (als Wand für die Spielwelt)
   for k := 0 to FColCount - 1 do
   begin
     for j := 0 to FRowCount - 1 do
