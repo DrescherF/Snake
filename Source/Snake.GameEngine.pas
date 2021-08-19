@@ -15,21 +15,24 @@ type
     constructor Create(AColCount, ARowCount: Integer);
     property Cells[ACol, ARow: Integer]: Integer read GetValue write SetValue;
     procedure Snake();
-    procedure SnakeMoveRight();
-    procedure SnakeMoveDown();
-    procedure SnakeMoveLeft();
-    procedure SnakeMoveUp();
+    procedure SnakeMove();
 
   var
     SnakeX: Integer;
     SnakeY: Integer;
     SnakeLives: Boolean;
 
+  type
+    TEntityDirection = (edRight, edDown, edLeft, edUp);
+
+  var
+    ED: TEntityDirection;
   end;
 
 implementation
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
+
 var
   i, j, k: Integer;
 
@@ -71,6 +74,7 @@ begin
 end;
 
 procedure TGameEngine.Snake;
+
 var
   i, j: Integer;
 
@@ -82,59 +86,62 @@ begin
 
 end;
 
-procedure TGameEngine.SnakeMoveDown;
-begin
-  if (Cells[SnakeX, SnakeY + 1] = 1) then
-  begin
-    SnakeLives := false;
-  end
-  else
-  begin
-    Cells[SnakeX, SnakeY] := 0;
-    inc(SnakeY);
-    Cells[SnakeX, SnakeY] := 1;
-  end;
-end;
+procedure TGameEngine.SnakeMove;
 
-procedure TGameEngine.SnakeMoveLeft;
 begin
-  if (Cells[SnakeX - 1, SnakeY] = 1) then
-  begin
-    SnakeLives := false;
-  end
-  else
-  begin
-    Cells[SnakeX, SnakeY] := 0;
-    dec(SnakeX);
-    Cells[SnakeX, SnakeY] := 1;
-  end;
-end;
-
-procedure TGameEngine.SnakeMoveRight();
-begin
-  if (Cells[SnakeX + 1, SnakeY] = 1) then
-  begin
-    SnakeLives := false;
-  end
-  else
-  begin
-    Cells[SnakeX, SnakeY] := 0;
-    inc(SnakeX);
-    Cells[SnakeX, SnakeY] := 1;
-  end;
-end;
-
-procedure TGameEngine.SnakeMoveUp;
-begin
-  if (Cells[SnakeX , SnakeY - 1] = 1) then
-  begin
-    SnakeLives := false;
-  end
-  else
-  begin
-    Cells[SnakeX, SnakeY] := 0;
-    dec(SnakeY);
-    Cells[SnakeX, SnakeY] := 1;
+  case ED of
+    edRight:
+      begin
+        if (Cells[SnakeX + 1, SnakeY] = 1) then
+        begin
+          SnakeLives := false;
+        end
+        else
+        begin
+          Cells[SnakeX, SnakeY] := 0;
+          inc(SnakeX);
+          Cells[SnakeX, SnakeY] := 1;
+        end;
+      end;
+    edDown:
+      begin
+        if (Cells[SnakeX, SnakeY + 1] = 1) then
+        begin
+          SnakeLives := false;
+        end
+        else
+        begin
+          Cells[SnakeX, SnakeY] := 0;
+          inc(SnakeY);
+          Cells[SnakeX, SnakeY] := 1;
+        end;
+      end;
+    edLeft:
+      begin
+        if (Cells[SnakeX - 1, SnakeY] = 1) then
+        begin
+          SnakeLives := false;
+        end
+        else
+        begin
+          Cells[SnakeX, SnakeY] := 0;
+          dec(SnakeX);
+          Cells[SnakeX, SnakeY] := 1;
+        end;
+      end;
+    edUp:
+      begin
+        if (Cells[SnakeX, SnakeY - 1] = 1) then
+        begin
+          SnakeLives := false;
+        end
+        else
+        begin
+          Cells[SnakeX, SnakeY] := 0;
+          dec(SnakeY);
+          Cells[SnakeX, SnakeY] := 1;
+        end;
+      end;
   end;
 end;
 
