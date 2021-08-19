@@ -120,6 +120,7 @@
             <Form>FormGameOver</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Snake.Types.pas"/>
         <DCCReference Include="Snake.Snake.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
