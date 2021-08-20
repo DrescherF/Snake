@@ -3,7 +3,8 @@ unit Snake.GameEngine;
 interface
 
 uses
-  Snake.Types, Snake.settings, Snake.Snake, Winapi.Windows;
+  Snake.Types, Snake.settings, Snake.Snake, Winapi.Windows, Vcl.ExtCtrls,
+  System.Classes;
 
 type
   TGameEngine = class
@@ -11,15 +12,19 @@ type
   private
     FSpielfeld: Array of Array of Integer;
     FSnake: TSnake;
+    FGameOver: Boolean;
     FFood: TPoint;
     FColCount, FRowCount: Integer;
+    FTimer: TTimer;
+    FOnProcess: TNotifyEvent;
+    FOnGameOver: TNotifyEvent;
     function GetValue(ACol, ARow: Integer): Integer;
     /// <summary>Schaut ob das Feld leer ist</summary>
     function FieldEmpty(ACol, ARow: Integer): Boolean;
     procedure SetValue(ACol, ARow: Integer; const Value: Integer);
-
+    procedure DoProcess(Sender: TObject);
+    procedure SetGameOver(const Value: Boolean);
   public
-    SnakeLives: Boolean;
     ED: Snake.Types.TEntityDirection;
     constructor Create(AColCount, ARowCount: Integer);
     destructor Destroy(); Override;
@@ -28,13 +33,16 @@ type
     procedure PlaceFood();
     property Snake: TSnake read FSnake;
     property Food: TPoint read FFood;
+    property OnProcess: TNotifyEvent read FOnProcess write FOnProcess;
+    property OnGameOver: TNotifyEvent read FOnGameOver write FOnGameOver;
+    property GameOver: Boolean read FGameOver write SetGameOver;
 
   end;
 
 implementation
 
 uses
-  System.SysUtils, System.Classes;
+  System.SysUtils;
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
 
@@ -43,6 +51,12 @@ var
 
 begin
   FSnake := TSnake.Create(settings.StartX, settings.StartY);
+
+  // Timer wird erzeugt und Tick Geschwindigkeit initalisiert
+  FTimer := TTimer.Create(nil);
+  FTimer.Interval := settings.InitialGameSpeed;
+  FTimer.OnTimer := DoProcess;
+
   FColCount := AColCount;
   FRowCount := ARowCount;
 
@@ -69,8 +83,16 @@ end;
 
 destructor TGameEngine.Destroy;
 begin
+  FreeAndNil(FTimer);
   FreeAndNil(FSnake);
   inherited;
+end;
+
+procedure TGameEngine.DoProcess(Sender: TObject);
+begin
+  SnakeMove;
+  If (Assigned(FOnProcess)) then
+    FOnProcess(self);
 end;
 
 function TGameEngine.FieldEmpty(ACol, ARow: Integer): Boolean;
@@ -103,6 +125,16 @@ begin
   end;
 end;
 
+procedure TGameEngine.SetGameOver(const Value: Boolean);
+begin
+  if FGameOver = Value then
+    exit;
+  FTimer.Enabled := not Value;
+  FGameOver := Value;
+  if FGameOver and Assigned(FOnGameOver) then
+    FOnGameOver(self);
+end;
+
 procedure TGameEngine.SetValue(ACol, ARow: Integer; const Value: Integer);
 begin
 
@@ -116,7 +148,7 @@ begin
 
   FSnake.Direction := ED;
   FSnake.Move;
-  SnakeLives := Cells[FSnake.X, FSnake.Y] = 0;
+  GameOver := not (Cells[FSnake.X, FSnake.Y] = 0);
   if FFood = FSnake.Position then
   begin
     FSnake.Grow(1);

@@ -16,15 +16,16 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Spielfeld: TStringGrid;
-    TimerTick: TTimer;
-    procedure TimerTickTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
 
   private
     FGameEngine: TGameEngine;
     procedure FillStringGrid();
+    procedure GameEngineOnProcess(Sender: TObject);
+    procedure GameEngineOnGameOver(Sender: TObject);
 
   public
 
@@ -61,24 +62,28 @@ begin
       end;
     end;
   end;
-  Spielfeld.Cells[FGameEngine.Food.X,FGameEngine.Food.Y] := '🍔';
+  // essen auf das SpringGrid malen
+  Spielfeld.Cells[FGameEngine.Food.X, FGameEngine.Food.Y] := '🍔';
+  // Tail auf das SpringGrid malen
   for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
   begin
     Spielfeld.Cells[FGameEngine.Snake.Tail[i].X,
       FGameEngine.Snake.Tail[i].Y] := '+';
   end;
+  // Schlangenkopf auf das StringGrid malen
   Spielfeld.Cells[FGameEngine.Snake.X, FGameEngine.Snake.Y] := 'O';
 end;
 
 procedure TFormSGame.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  TimerTick.Enabled := false;
+  //TimerTick.Enabled := false;
   FGameEngine.Free;
 end;
 
 procedure TFormSGame.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+  // Pfeiltasten einlesen
   case Key of
     VK_RIGHT:
       FGameEngine.ED := edRight;
@@ -104,36 +109,34 @@ begin
       FGameEngine.ED := edUp;
   end;
 end;
+
 procedure TFormSGame.FormShow(Sender: TObject);
 begin
   Spielfeld.ColCount := Settings.ColCount;
   Spielfeld.RowCount := Settings.RowCount;
 
   FGameEngine := TGameEngine.Create(Settings.ColCount, Settings.RowCount);
+  FGameEngine.OnProcess := GameEngineOnProcess;
 
-  FGameEngine.SnakeLives := true;
+  FGameEngine.OnGameOver := GameEngineOnGameOver;
+
   FGameEngine.PlaceFood();
 
   FillStringGrid();
 
-  TimerTick.Enabled := true;
+  //TimerTick.Enabled := true;
 end;
 
-procedure TFormSGame.TimerTickTimer(Sender: TObject);
-var
-  modalResult: Integer;
+procedure TFormSGame.GameEngineOnGameOver(Sender: TObject);
 begin
-  if FGameEngine.SnakeLives then
-  begin
-    FGameEngine.SnakeMove();
-    FillStringGrid();
-  end
-  else
-  begin
-    TimerTick.Enabled := false;
-    Close;
-    modalResult := FormGameOver.ShowModal;
-  end;
+//GameOver anzeigen und SGame mot ModalReasult schliessen
+  modalResult := FormGameOver.ShowModal;
+end;
+
+procedure TFormSGame.GameEngineOnProcess(Sender: TObject);
+begin
+  FillStringGrid();
 end;
 
 end.
+

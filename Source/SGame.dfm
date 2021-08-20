@@ -14,6 +14,7 @@ object FormSGame: TFormSGame
   OldCreateOrder = False
   OnClose = FormClose
   OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -65,12 +66,5 @@ object FormSGame: TFormSGame
       FixedRows = 0
       TabOrder = 0
     end
-  end
-  object TimerTick: TTimer
-    Enabled = False
-    Interval = 500
-    OnTimer = TimerTickTimer
-    Left = 128
-    Top = 83
   end
 end

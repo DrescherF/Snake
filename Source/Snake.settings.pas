@@ -12,7 +12,10 @@ type
   public
     /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
   var
-    ColCount, RowCount, StartX, StartY, TailLength: Integer;
+    ColCount, RowCount: Integer;
+    StartX, StartY: Integer;
+    TailLength: Integer;
+    InitialGameSpeed: Integer;
     class function GetInstance(): TSettings;
     class procedure ReleaseInstance();
 
@@ -39,6 +42,7 @@ begin
   StartX := 10;
   StartY := 10;
   TailLength := 2;
+  InitialGameSpeed := 250;
 end;
 
 class function TSettings.GetInstance: TSettings;
