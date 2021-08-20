@@ -14,6 +14,7 @@ type
   var
     ColCount, RowCount: Integer;
     StartX, StartY: Integer;
+    CellSize: Integer;
     TailLength: Integer;
     InitialGameSpeed: Integer;
     class function GetInstance(): TSettings;
@@ -41,6 +42,7 @@ begin
   RowCount := 36;
   StartX := 10;
   StartY := 10;
+  CellSize := 20;
   TailLength := 2;
   InitialGameSpeed := 250;
 end;

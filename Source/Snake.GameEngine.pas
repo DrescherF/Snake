@@ -10,7 +10,7 @@ type
   TGameEngine = class
 
   private
-    FSpielfeld: Array of Array of Integer;
+    FSpielfeld: Array of Array of Boolean;
     FSnake: TSnake;
     FGameOver: Boolean;
     FFood: TFood;
@@ -18,17 +18,17 @@ type
     FTimer: TTimer;
     FOnProcess: TNotifyEvent;
     FOnGameOver: TNotifyEvent;
-    function GetValue(ACol, ARow: Integer): Integer;
+    function GetValue(ACol, ARow: Integer): Boolean;
     /// <summary>Schaut ob das Feld leer ist</summary>
     function FieldEmpty(ACol, ARow: Integer): Boolean;
-    procedure SetValue(ACol, ARow: Integer; const Value: Integer);
+    procedure SetValue(ACol, ARow: Integer; const Value: Boolean);
     procedure DoProcess(Sender: TObject);
     procedure SetGameOver(const Value: Boolean);
   public
     ED: Snake.Types.TEntityDirection;
     constructor Create(AColCount, ARowCount: Integer);
     destructor Destroy(); Override;
-    property Cells[ACol, ARow: Integer]: Integer read GetValue write SetValue;
+    property Cells[ACol, ARow: Integer]: Boolean read GetValue write SetValue;
     procedure SnakeMove();
     procedure PlaceFood();
     property Snake: TSnake read FSnake;
@@ -77,7 +77,7 @@ begin
     begin
       if (k = 0) or (k = FColCount - 1) or (j = 0) or (j = FRowCount - 1) then
       begin
-        Cells[k, j] := 1;
+        Cells[k, j] := true;
       end;
     end;
   end;
@@ -101,13 +101,13 @@ end;
 
 function TGameEngine.FieldEmpty(ACol, ARow: Integer): Boolean;
 begin
-  result := Cells[ACol, ARow] = 0;
+  result := not Cells[ACol, ARow];
   if not result then
     exit;
   result := not FSnake.Intersects(Point(ACol, ARow));
 end;
 
-function TGameEngine.GetValue(ACol, ARow: Integer): Integer;
+function TGameEngine.GetValue(ACol, ARow: Integer): Boolean;
 begin
   result := FSpielfeld[ACol, ARow];
 end;
@@ -140,7 +140,7 @@ begin
     FOnGameOver(self);
 end;
 
-procedure TGameEngine.SetValue(ACol, ARow: Integer; const Value: Integer);
+procedure TGameEngine.SetValue(ACol, ARow: Integer; const Value: Boolean);
 begin
 
   FSpielfeld[ACol, ARow] := Value;
@@ -153,7 +153,7 @@ begin
 
   FSnake.Direction := ED;
   FSnake.Move;
-  GameOver := not(Cells[FSnake.X, FSnake.Y] = 0);
+  GameOver := (Cells[FSnake.X, FSnake.Y]);
   if FFood.Position = FSnake.Position then
   begin
     FSnake.Grow(1);
