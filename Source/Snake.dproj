@@ -122,6 +122,8 @@
         </DCCReference>
         <DCCReference Include="Snake.Types.pas"/>
         <DCCReference Include="Snake.Snake.pas"/>
+        <DCCReference Include="Snake.Entity.pas"/>
+        <DCCReference Include="Snake.Food.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -9,7 +9,9 @@ uses
   Snake.settings in 'Snake.settings.pas',
   SGameOver in 'SGameOver.pas' {FormGameOver},
   Snake.Types in 'Snake.Types.pas',
-  Snake.Snake in 'Snake.Snake.pas';
+  Snake.Snake in 'Snake.Snake.pas',
+  Snake.Entity in 'Snake.Entity.pas',
+  Snake.Food in 'Snake.Food.pas';
 
 {$R *.res}
 

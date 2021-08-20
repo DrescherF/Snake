@@ -3,38 +3,27 @@ unit Snake.Snake;
 interface
 
 uses
-  Winapi.Windows, Snake.Types, System.Generics.Collections;
+  Winapi.Windows, Snake.Types, System.Generics.Collections, Snake.Entity;
 
 type
-  TSnake = class
+  TSnake = class(TEntity)
 
   private
-    FPosition: TPoint;
-    FDirection: TEntityDirection;
     FTail: TList<TPoint>;
-    function GetX: Integer;
-    function GetY: Integer;
-    procedure SetX(const Value: Integer);
-    procedure SetY(const Value: Integer);
-    procedure SetDirection(const Value: TEntityDirection);
 
   public
-
-    constructor Create(AX, AY: Integer);
+    constructor Create(AX, AY: Integer); Override;
     destructor Destroy(); Override;
     procedure Move();
     ///<summary> Schlange waechst beim Essen </summary>
     procedure Grow(Value: Integer);
     ///<summary> Schaut ob der Punkt auf der Schlange liegt </summary>
-    function Intersects(Coord: TPoint): Boolean;
-    property X: Integer read GetX write SetX;
-    property Y: Integer read GetY write SetY;
-    property Position: TPoint read FPosition;
-    property Direction: TEntityDirection read FDirection write SetDirection;
+    function Intersects(Coord: TPoint): Boolean; Override;
     property Tail: TList<TPoint> read FTail;
   end;
 
 implementation
+
 
 uses
   System.SysUtils, Snake.settings;
@@ -43,8 +32,8 @@ uses
 
 constructor TSnake.Create(AX, AY: Integer);
 begin
-  X := AX;
-  Y := AY;
+  inherited Create(AX, AY);
+
   FTail := TList<TPoint>.Create;
   // 2 Segmente hinzufuegen
   Grow(Settings.TailLength);
@@ -54,16 +43,6 @@ destructor TSnake.Destroy;
 begin
   FreeAndNil(FTail);
   inherited;
-end;
-
-function TSnake.GetX: Integer;
-begin
-  result := FPosition.X;
-end;
-
-function TSnake.GetY: Integer;
-begin
-  result := FPosition.Y;
 end;
 
 procedure TSnake.Grow(Value: Integer);
@@ -78,7 +57,7 @@ function TSnake.Intersects(Coord: TPoint): Boolean;
 var
   i: Integer;
 begin
-  result:= Coord = FPosition;
+  result := inherited;
   if result then
     exit;
   for i := 0 to FTail.Count - 1 do
@@ -106,22 +85,6 @@ begin
     edUp:
       Y := Y - 1;
   end;
-end;
-
-procedure TSnake.SetDirection(const Value: TEntityDirection);
-begin
-  // Todo: schlange darf die Richtung nicht in die entgegengesetzte aendern
-  FDirection := Value;
-end;
-
-procedure TSnake.SetX(const Value: Integer);
-begin
-  FPosition.X := Value;
-end;
-
-procedure TSnake.SetY(const Value: Integer);
-begin
-  FPosition.Y := Value;
 end;
 
 end.

@@ -63,7 +63,7 @@ begin
     end;
   end;
   // essen auf das SpringGrid malen
-  Spielfeld.Cells[FGameEngine.Food.X, FGameEngine.Food.Y] := '🍔';
+  Spielfeld.Cells[FGameEngine.Food.X, FGameEngine.Food.Y] := FGameEngine.Food.Icon;
   // Tail auf das SpringGrid malen
   for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
   begin

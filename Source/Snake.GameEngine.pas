@@ -4,7 +4,7 @@ interface
 
 uses
   Snake.Types, Snake.settings, Snake.Snake, Winapi.Windows, Vcl.ExtCtrls,
-  System.Classes;
+  System.Classes, System.Types, Snake.Food;
 
 type
   TGameEngine = class
@@ -13,7 +13,7 @@ type
     FSpielfeld: Array of Array of Integer;
     FSnake: TSnake;
     FGameOver: Boolean;
-    FFood: TPoint;
+    FFood: TFood;
     FColCount, FRowCount: Integer;
     FTimer: TTimer;
     FOnProcess: TNotifyEvent;
@@ -32,7 +32,7 @@ type
     procedure SnakeMove();
     procedure PlaceFood();
     property Snake: TSnake read FSnake;
-    property Food: TPoint read FFood;
+    property Food: TFood read FFood;
     property OnProcess: TNotifyEvent read FOnProcess write FOnProcess;
     property OnGameOver: TNotifyEvent read FOnGameOver write FOnGameOver;
     property GameOver: Boolean read FGameOver write SetGameOver;
@@ -51,6 +51,9 @@ var
 
 begin
   FSnake := TSnake.Create(settings.StartX, settings.StartY);
+
+  // Food auf Nullpointer setzen
+  FFood := nil;
 
   // Timer wird erzeugt und Tick Geschwindigkeit initalisiert
   FTimer := TTimer.Create(nil);
@@ -84,6 +87,7 @@ end;
 destructor TGameEngine.Destroy;
 begin
   FreeAndNil(FTimer);
+  FreeAndNil(FFood);
   FreeAndNil(FSnake);
   inherited;
 end;
@@ -117,7 +121,8 @@ begin
 
   if FieldEmpty(i, j) then
   begin
-    FFood := Point(i, j);
+    FreeAndNil(FFood);
+    FFood := TFood.Create(i, j);
   end
   else
   begin
@@ -148,8 +153,8 @@ begin
 
   FSnake.Direction := ED;
   FSnake.Move;
-  GameOver := not (Cells[FSnake.X, FSnake.Y] = 0);
-  if FFood = FSnake.Position then
+  GameOver := not(Cells[FSnake.X, FSnake.Y] = 0);
+  if FFood.Position = FSnake.Position then
   begin
     FSnake.Grow(1);
     PlaceFood;
