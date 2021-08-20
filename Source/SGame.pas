@@ -91,6 +91,19 @@ begin
   end;
 end;
 
+procedure TFormSGame.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  case Key of
+    'd':
+      FGameEngine.ED := edRight;
+    's':
+      FGameEngine.ED := edDown;
+    'a':
+      FGameEngine.ED := edLeft;
+    'w':
+      FGameEngine.ED := edUp;
+  end;
+end;
 procedure TFormSGame.FormShow(Sender: TObject);
 begin
   Spielfeld.ColCount := Settings.ColCount;
