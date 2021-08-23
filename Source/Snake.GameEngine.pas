@@ -148,15 +148,24 @@ begin
 end;
 
 procedure TGameEngine.SnakeMove;
+var
+  i: Integer;
 
 begin
 
   FSnake.Direction := ED;
   FSnake.Move;
+  //Ueberprueft ob Schlangenkopf mit Wand kollidiert
   GameOver := (Cells[FSnake.X, FSnake.Y]);
+
+  //Ueberprueft ob Schlangenkopf mit eigenem Scweif kollidiert
+  GameOver := GameOver or Snake.IntersectsWithTail(FSnake.Position);
+
+  // Ueberprueft ob Schlangenkopf auf Futter liegt
   if FFood.Position = FSnake.Position then
   begin
     FSnake.Grow(1);
+    //platziert neues Futter
     PlaceFood;
   end;
 end;

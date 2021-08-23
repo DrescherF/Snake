@@ -19,6 +19,8 @@ type
     procedure Grow(Value: Integer);
     ///<summary> Schaut ob der Punkt auf der Schlange liegt </summary>
     function Intersects(Coord: TPoint): Boolean; Override;
+    ///<summary> Schaut ob der Punkt auf dem Schweif liegt </summary>
+    function IntersectsWithTail(Coord: TPoint): Boolean;
     property Tail: TList<TPoint> read FTail;
   end;
 
@@ -54,18 +56,23 @@ begin
 end;
 
 function TSnake.Intersects(Coord: TPoint): Boolean;
-var
-  i: Integer;
 begin
   result := inherited;
   if result then
     exit;
+  result := IntersectsWithTail(Coord);
+end;
+
+function TSnake.IntersectsWithTail(Coord: TPoint): Boolean;
+var
+  i: Integer;
+begin
+  result := false;
   for i := 0 to FTail.Count - 1 do
   begin
     if FTail[i] = Coord then
       exit(true);
   end;
-
 end;
 
 procedure TSnake.Move;

@@ -36,6 +36,8 @@ var
 implementation
 
 {$R *.dfm}
+uses
+  Snake.Snake;
 { TFormSGame }
 
 procedure TFormSGame.DrawBackground;
@@ -44,39 +46,55 @@ var
 begin
   with ImageBackground.Canvas do
   begin
-    brush.Color := clwhite;
-    fillrect(rect(0, 0, width, height));
-    //waende zeichnen
     brush.Color := clblack;
+    fillrect(rect(0, 0, width, height));
+    // waende zeichnen
+    brush.Color := clgray;
     for i := 0 to Settings.ColCount - 1 do
     begin
       for j := 0 to Settings.RowCount - 1 do
-      if FGameEngine.Cells[i, j] then
-      begin
-       FillTile(ImageBackground.Canvas, i, j);
-      end;
+        if FGameEngine.Cells[i, j] then
+        begin
+          FillTile(ImageBackground.Canvas, i, j);
+        end;
     end;
   end;
 end;
 
 procedure TFormSGame.DrawScene;
+var
+  i: Integer;
 begin
   with ImageScene.Canvas do
+  begin
+    // clear
+    brush.Color := clFuchsia;
+    fillrect(rect(0, 0, width, height));
+
+    // Food zeichnen
+    Pen.Color := clgray;
+    Font.Color := clyellow;
+    brush.Color := clblack;
+    Font.Size := 13;
+    TextOut(FGameEngine.Food.X * Settings.CellSize,
+      FGameEngine.Food.Y * Settings.CellSize, FGameEngine.Food.Icon);
+
+    // Schlangenkopf zeichnen
+    brush.Color := cllime;
+    FillTile(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y);
+
+
+    // Schlangenschweif zeichnen
+    brush.Color := $FFAAAA;
+    for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
     begin
-      //clear
-      brush.Color := clFuchsia;
-      fillrect(rect(0, 0, width, height));
-
-      Pen.Color := clblack;
-      brush.Color := clwhite;
-      Font.Size := 13;
-      TextOut(FGameEngine.Food.X * Settings.CellSize, FGameEngine.Food.Y * Settings.CellSize, FGameEngine.Food.Icon);
-
-
-      //Schlangenkopf zeichnen
-      brush.Color:= clred;
-      FillTile(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y);
+      FillTile(ImageScene.Canvas, FGameEngine.Snake.Tail[i].X,
+        FGameEngine.Snake.Tail[i].Y);
     end;
+
+
+
+  end;
 end;
 
 procedure TFormSGame.FillStringGrid;
@@ -117,7 +135,7 @@ end;
 procedure TFormSGame.FillTile(Canvas: TCanvas; X, Y: Integer);
 begin
   Canvas.fillrect(rect(X * Settings.CellSize, Y * Settings.CellSize,
-          (X + 1) * Settings.CellSize, (Y + 1) * Settings.CellSize));
+    (X + 1) * Settings.CellSize, (Y + 1) * Settings.CellSize));
 end;
 
 procedure TFormSGame.FormClose(Sender: TObject; var Action: TCloseAction);

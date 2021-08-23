@@ -43,7 +43,7 @@ begin
   StartX := 10;
   StartY := 10;
   CellSize := 20;
-  TailLength := 2;
+  TailLength := 3;
   InitialGameSpeed := 250;
 end;
 
