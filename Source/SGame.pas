@@ -20,7 +20,6 @@ type
   private
     FGameEngine: TGameEngine;
     procedure FillTile(Canvas: TCanvas; X, Y: Integer);
-    procedure FillStringGrid();
     procedure GameEngineOnProcess(Sender: TObject);
     procedure GameEngineOnGameOver(Sender: TObject);
     procedure DrawBackground;
@@ -79,11 +78,6 @@ begin
     TextOut(FGameEngine.Food.X * Settings.CellSize,
       FGameEngine.Food.Y * Settings.CellSize, FGameEngine.Food.Icon);
 
-    // Schlangenkopf zeichnen
-    brush.Color := cllime;
-    FillTile(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y);
-
-
     // Schlangenschweif zeichnen
     brush.Color := $FFAAAA;
     for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
@@ -91,46 +85,15 @@ begin
       FillTile(ImageScene.Canvas, FGameEngine.Snake.Tail[i].X,
         FGameEngine.Snake.Tail[i].Y);
     end;
-
+    
+    // Schlangenkopf zeichnen
+    brush.Color := cllime;
+    FillTile(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y);
 
 
   end;
 end;
 
-procedure TFormSGame.FillStringGrid;
-var
-  i, j: Integer;
-
-begin {
-    for i := 0 to Spielfeld.ColCount - 1 do
-    begin
-    for j := 0 to Spielfeld.RowCount - 1 do
-    begin
-    case (FGameEngine.Cells[i, j]) of
-    0:
-    Spielfeld.Cells[i, j] := '';
-    1:
-    Spielfeld.Cells[i, j] := 'F';
-    2:
-    Spielfeld.Cells[i, j] := 'X';
-    else
-    begin
-    Spielfeld.Cells[i, j] := 'X';
-    end;
-    end;
-    end;
-    end;
-    // essen auf das SpringGrid malen
-    Spielfeld.Cells[FGameEngine.Food.X, FGameEngine.Food.Y] := FGameEngine.Food.Icon;
-    // Tail auf das SpringGrid malen
-    for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
-    begin
-    Spielfeld.Cells[FGameEngine.Snake.Tail[i].X,
-    FGameEngine.Snake.Tail[i].Y] := '+';
-    end;
-    // Schlangenkopf auf das StringGrid malen
-    Spielfeld.Cells[FGameEngine.Snake.X, FGameEngine.Snake.Y] := 'O'; }
-end;
 
 procedure TFormSGame.FillTile(Canvas: TCanvas; X, Y: Integer);
 begin
@@ -152,13 +115,13 @@ begin
     VK_ESCAPE:
       Close; // Todo Menue Form aufrufen
     VK_RIGHT:
-      FGameEngine.ED := edRight;
+        FGameEngine.ED := edRight;
     VK_DOWN:
-      FGameEngine.ED := edDown;
+        FGameEngine.ED := edDown;
     VK_LEFT:
-      FGameEngine.ED := edLeft;
+        FGameEngine.ED := edLeft;
     VK_UP:
-      FGameEngine.ED := edUp;
+        FGameEngine.ED := edUp;
   end;
 
 end;
@@ -167,13 +130,13 @@ procedure TFormSGame.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   case Key of
     'd':
-      FGameEngine.ED := edRight;
+        FGameEngine.ED := edRight;
     's':
-      FGameEngine.ED := edDown;
+        FGameEngine.ED := edDown;
     'a':
-      FGameEngine.ED := edLeft;
+        FGameEngine.ED := edLeft;
     'w':
-      FGameEngine.ED := edUp;
+        FGameEngine.ED := edUp;
   end;
 end;
 

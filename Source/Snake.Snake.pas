@@ -10,6 +10,11 @@ type
 
   private
     FTail: TList<TPoint>;
+    FLastDirection: TEntityDirection;
+
+  protected
+    ///<summary> Richtung kann hier (nicht um 180Grad) geaendert werden </summary>
+    procedure SetDirection(const Value: TEntityDirection); Override;
 
   public
     constructor Create(AX, AY: Integer); Override;
@@ -92,6 +97,25 @@ begin
     edUp:
       Y := Y - 1;
   end;
+end;
+
+procedure TSnake.SetDirection(const Value: TEntityDirection);
+begin
+  case FLastDirection of
+    edRight:
+      if Value <> edLeft then
+        FDirection := Value;
+    edDown:
+      if Value <> edUp then
+        FDirection := Value;
+    edLeft:
+      if Value <> edRight then
+        FDirection := Value;
+    edUp:
+      if Value <> edDown then
+        FDirection := Value;
+  end;
+  FlastDirection := FDirection;
 end;
 
 end.
