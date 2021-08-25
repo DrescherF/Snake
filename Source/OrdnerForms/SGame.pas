@@ -25,7 +25,8 @@ type
     procedure GameEngineOnGameOver(Sender: TObject);
     procedure DrawBackground;
     procedure DrawScene;
-
+    const CL_TAIL_GRADIENT: LongInt = $AA6666;
+    const CL_TAIL: LongInt = $FFAAAA;
   public
 
   end;
@@ -37,7 +38,7 @@ implementation
 
 {$R *.dfm}
 uses
-  Snake.Snake;
+  Math, Snake.Snake;
 { TFormSGame }
 
 procedure TFormSGame.DrawBackground;
@@ -64,6 +65,8 @@ end;
 procedure TFormSGame.DrawScene;
 var
   i: Integer;
+  rTail, gTail, bTail: Byte;
+  rBack, gBack, bBack: Byte;
 begin
   with ImageScene.Canvas do
   begin
@@ -80,9 +83,22 @@ begin
       FGameEngine.Food.Y * Settings.CellSize, FGameEngine.Food.Icon);
 
     // Schlangenschweif zeichnen
-    brush.Color := $FFAAAA;
+
+    rTail := CL_TAIL;
+    gTail := CL_TAIL shr 8;
+    bTail := CL_TAIL shr 16;
+
+    rBack := CL_TAIL_GRADIENT;
+    gBack := CL_TAIL_GRADIENT shr 8;
+    bBack := CL_TAIL_GRADIENT shr 16;
+
     for i := 0 to FGameEngine.Snake.Tail.Count - 1 do
     begin
+      Brush.Color := RGB(
+        rTail - trunc((rTail - rBack) / FGameEngine.Snake.Tail.Count * i),
+        gTail - trunc((gTail - gBack) / FGameEngine.Snake.Tail.Count * i),
+        bTail - trunc((bTail - bBack) / FGameEngine.Snake.Tail.Count * i)
+      );
       FillTile(ImageScene.Canvas, FGameEngine.Snake.Tail[i].X,
         FGameEngine.Snake.Tail[i].Y);
     end;
