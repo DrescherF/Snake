@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   DBGridHS, Vcl.StdCtrls, Snake.settings, Snake.GameEngine,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, SSettings;
 
 type
   TFormSMain = class(TForm)
@@ -15,9 +15,11 @@ type
     ButtonHighScores: TButton;
     ButtonClose: TButton;
     Panel1: TPanel;
+    ButtonSettings: TButton;
     procedure ButtonStartClick(Sender: TObject);
     procedure ButtonCloseClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ButtonSettingsClick(Sender: TObject);
   private
     FGameEngine: TGameEngine;
     { Private-Deklarationen }
@@ -34,6 +36,13 @@ implementation
 
 uses
   SDialogNameEingeben, SGame;
+
+procedure TFormSMain.ButtonSettingsClick(Sender: TObject);
+var
+  modalResult: Integer;
+begin
+  modalResult := FormSettings.ShowModal;
+end;
 
 procedure TFormSMain.ButtonStartClick(Sender: TObject);
 var

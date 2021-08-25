@@ -1,6 +1,7 @@
 object FormSMain: TFormSMain
   Left = 0
   Top = 0
+  ActiveControl = ButtonStart
   Caption = 'FormSMain'
   ClientHeight = 486
   ClientWidth = 384
@@ -29,7 +30,7 @@ object FormSMain: TFormSMain
       Height = 50
       Align = alBottom
       Caption = 'ButtonClose'
-      TabOrder = 2
+      TabOrder = 3
       OnClick = ButtonCloseClick
     end
     object ButtonHighScores: TButton
@@ -50,6 +51,16 @@ object FormSMain: TFormSMain
       Caption = 'ButtonStart'
       TabOrder = 0
       OnClick = ButtonStartClick
+    end
+    object ButtonSettings: TButton
+      Left = 0
+      Top = 300
+      Width = 200
+      Height = 50
+      Align = alBottom
+      Caption = 'ButtonSettings'
+      TabOrder = 2
+      OnClick = ButtonSettingsClick
     end
   end
 end

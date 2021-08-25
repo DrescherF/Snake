@@ -2,21 +2,30 @@ unit Snake.settings;
 
 interface
 
+uses
+  IniFiles;
+
 type
+ /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
   TSettings = class
 
   strict private
     class var FInstance: TSettings;
     constructor Create(); reintroduce;
+    destructor Destroy(); Override;
+
   private
+
   public
-    /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
+    procedure Refresh();
+
   var
     ColCount, RowCount: Integer;
     StartX, StartY: Integer;
     CellSize: Integer;
     TailLength: Integer;
     InitialGameSpeed: Integer;
+    Ini: TInifile;
     class function GetInstance(): TSettings;
     class procedure ReleaseInstance();
 
@@ -37,14 +46,20 @@ end;
 { TSettings }
 
 constructor TSettings.Create;
+var
+  filename: String;
 begin
-  ColCount := 64;
-  RowCount := 36;
-  StartX := 10;
-  StartY := 10;
+  filename := ExtractFilePath(ParamStr(0)) + 'settings.ini';
+  Ini := TInifile.Create(filename);
+
+  Refresh;
   CellSize := 20;
-  TailLength := 3;
-  InitialGameSpeed := 250;
+end;
+
+destructor TSettings.Destroy;
+begin
+  Ini.Free;
+  inherited;
 end;
 
 class function TSettings.GetInstance: TSettings;
@@ -54,6 +69,21 @@ begin
     FInstance := TSettings.Create();
   end;
   result := FInstance;
+end;
+
+procedure TSettings.Refresh;
+begin
+  ColCount := ((Ini.ReadInteger('SpielfeldGroesse', 'ColCount', 4) * 16)
+    div 2) + 16;
+  RowCount := ((Ini.ReadInteger('SpielfeldGroesse', 'RowCount', 4) * 9)
+    div 2) + 9;
+
+  InitialGameSpeed := 600 div Ini.ReadInteger('StartWerte',
+    'InitialGameSpeed', 4);
+  TailLength := Ini.ReadInteger('StartWerte', 'TailLength', 3);
+
+  StartX := Random(ColCount - 14) + 7;
+  StartY := Random(RowCount - 8) + 4;
 end;
 
 class procedure TSettings.ReleaseInstance;

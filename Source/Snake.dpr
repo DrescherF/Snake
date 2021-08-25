@@ -11,7 +11,8 @@ uses
   Snake.Types in 'Snake.Types.pas',
   Snake.Snake in 'Snake.Snake.pas',
   Snake.Entity in 'Snake.Entity.pas',
-  Snake.Food in 'Snake.Food.pas';
+  Snake.Food in 'Snake.Food.pas',
+  SSettings in 'SSettings.pas' {FormSettings};
 
 {$R *.res}
 
@@ -23,5 +24,6 @@ begin
   Application.CreateForm(TFormSDialogNameEingeben, FormSDialogNameEingeben);
   Application.CreateForm(TFormSGame, FormSGame);
   Application.CreateForm(TFormGameOver, FormGameOver);
+  Application.CreateForm(TFormSettings, FormSettings);
   Application.Run;
 end.
