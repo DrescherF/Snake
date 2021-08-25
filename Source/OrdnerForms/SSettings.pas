@@ -28,12 +28,14 @@ type
     ComboBoxSpielfeld: TComboBox;
     NumberBoxColCount: TNumberBox;
     NumberBoxRowCount: TNumberBox;
+    ButtonStandartWerte: TButton;
     procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonSettingsUebernehmenClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ComboBoxSpielfeldChange(Sender: TObject);
     procedure TrackBarInitialGameSpeedChange(Sender: TObject);
     procedure TrackBarTailLengthChange(Sender: TObject);
+    procedure ButtonStandartWerteClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -76,6 +78,16 @@ begin
 
   settings.Refresh;
   Close;
+end;
+
+procedure TFormSettings.ButtonStandartWerteClick(Sender: TObject);
+begin
+  ComboBoxSpielfeld.ItemIndex := 2;
+  NumberBoxColCount.Value := 72;
+  NumberBoxRowCount.Value := 36;
+
+  TrackBarInitialGameSpeed.Position := 3;
+  TrackBarTailLength.Position := 3;
 end;
 
 procedure TFormSettings.ComboBoxSpielfeldChange(Sender: TObject);

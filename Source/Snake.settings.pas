@@ -74,7 +74,7 @@ end;
 
 procedure TSettings.Refresh;
 begin
-  ColCount := (Ini.ReadInteger('SpielfeldGroesse', 'ColCount', 64));
+  ColCount := (Ini.ReadInteger('SpielfeldGroesse', 'ColCount', 72));
   RowCount := (Ini.ReadInteger('SpielfeldGroesse', 'RowCount', 36));
 
   InitialGameSpeed := 360 div (Ini.ReadInteger('StartWerte',

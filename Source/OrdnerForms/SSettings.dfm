@@ -77,8 +77,6 @@ object FormSettings: TFormSettings
       MaxValue = 48.000000000000000000
       TabOrder = 1
       Value = 12.000000000000000000
-      ExplicitLeft = 280
-      ExplicitTop = 38
       ExplicitHeight = 21
     end
     object ComboBoxSpielfeld: TComboBox
@@ -129,7 +127,6 @@ object FormSettings: TFormSettings
       BevelOuter = bvNone
       Caption = ''
       TabOrder = 1
-      ExplicitTop = 260
       object LabelTrackBarTailLength: TLabel
         Left = 0
         Top = 0
@@ -181,7 +178,6 @@ object FormSettings: TFormSettings
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 180
       object LabelTrackbarInitialGameSpeed: TLabel
         Left = 0
         Top = 0
@@ -243,5 +239,14 @@ object FormSettings: TFormSettings
     Caption = 'Cancel'
     TabOrder = 3
     OnClick = ButtonCancelClick
+  end
+  object ButtonStandartWerte: TButton
+    Left = 40
+    Top = 392
+    Width = 180
+    Height = 25
+    Caption = 'Standart Settings'
+    TabOrder = 4
+    OnClick = ButtonStandartWerteClick
   end
 end
