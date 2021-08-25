@@ -102,21 +102,21 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="SMain.pas">
+        <DCCReference Include="OrdnerForms\SMain.pas">
             <Form>FormSMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="SDialogNameEingeben.pas">
+        <DCCReference Include="OrdnerDialoge\SDialogNameEingeben.pas">
             <Form>FormSDialogNameEingeben</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="SGame.pas">
+        <DCCReference Include="OrdnerForms\SGame.pas">
             <Form>FormSGame</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Snake.GameEngine.pas"/>
         <DCCReference Include="Snake.settings.pas"/>
-        <DCCReference Include="SGameOver.pas">
+        <DCCReference Include="OrdnerForms\SGameOver.pas">
             <Form>FormGameOver</Form>
             <FormType>dfm</FormType>
         </DCCReference>
@@ -124,7 +124,7 @@
         <DCCReference Include="Snake.Snake.pas"/>
         <DCCReference Include="Snake.Entity.pas"/>
         <DCCReference Include="Snake.Food.pas"/>
-        <DCCReference Include="SSettings.pas">
+        <DCCReference Include="OrdnerForms\SSettings.pas">
             <Form>FormSettings</Form>
             <FormType>dfm</FormType>
         </DCCReference>

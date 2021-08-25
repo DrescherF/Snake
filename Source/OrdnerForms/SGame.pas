@@ -92,40 +92,10 @@ begin
     FillTile(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y);
 
     // Schlangenaugen zeichnen
-    brush.Color := clwhite;
-    //ToDo // Noch voellig kaputt
-    //FillEyes(ImageScene.Canvas, FGameEngine.Snake.X, FGameEngine.Snake.Y, FGameEngine.ED);
-    {case FGameEngine.ED of
-      edRight:
-        ;
-      edDown:
-        ;
-      edLeft:
-        ;
-      edUp:
-        ;
-    end;}
 
   end;
 end;
 
-//ToDo // Noch voellig kaputt
-procedure TFormSGame.FillEyes(Canvas: TCanvas; X, Y: Integer;
-  Direction: TEntityDirection);
-begin
-  case Direction of
-    edRight:
-      Canvas.fillrect(rect(X + (X div X) * Settings.CellSize, Y * Settings.CellSize,
-        (X + (2 * (X div X))) * Settings.CellSize,
-        (Y + (Y div Y)) * Settings.CellSize));
-    edDown:
-      ;
-    edLeft:
-      ;
-    edUp:
-      ;
-  end;
-end;
 
 procedure TFormSGame.FillTile(Canvas: TCanvas; X, Y: Integer);
 begin

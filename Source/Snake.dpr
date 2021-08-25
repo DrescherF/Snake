@@ -2,17 +2,17 @@ program Snake;
 
 uses
   Vcl.Forms,
-  SMain in 'SMain.pas' {FormSMain},
-  SDialogNameEingeben in 'SDialogNameEingeben.pas' {FormSDialogNameEingeben},
-  SGame in 'SGame.pas' {FormSGame},
+  SMain in 'OrdnerForms\SMain.pas' {FormSMain},
+  SDialogNameEingeben in 'OrdnerDialoge\SDialogNameEingeben.pas' {FormSDialogNameEingeben},
+  SGame in 'OrdnerForms\SGame.pas' {FormSGame},
   Snake.GameEngine in 'Snake.GameEngine.pas',
   Snake.settings in 'Snake.settings.pas',
-  SGameOver in 'SGameOver.pas' {FormGameOver},
+  SGameOver in 'OrdnerForms\SGameOver.pas' {FormGameOver},
   Snake.Types in 'Snake.Types.pas',
   Snake.Snake in 'Snake.Snake.pas',
   Snake.Entity in 'Snake.Entity.pas',
   Snake.Food in 'Snake.Food.pas',
-  SSettings in 'SSettings.pas' {FormSettings};
+  SSettings in 'OrdnerForms\SSettings.pas' {FormSettings};
 
 {$R *.res}
 

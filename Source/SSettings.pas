@@ -33,6 +33,7 @@ type
     LabelTailLength: TLabel;
     ButtonSettingsUebernehmen: TButton;
     ButtonCancel: TButton;
+    ComboBox1: TComboBox;
     procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonSettingsUebernehmenClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

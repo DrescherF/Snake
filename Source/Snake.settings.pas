@@ -53,6 +53,7 @@ begin
   Ini := TInifile.Create(filename);
 
   Refresh;
+
   CellSize := 20;
 end;
 
@@ -73,13 +74,11 @@ end;
 
 procedure TSettings.Refresh;
 begin
-  ColCount := ((Ini.ReadInteger('SpielfeldGroesse', 'ColCount', 4) * 16)
-    div 2) + 16;
-  RowCount := ((Ini.ReadInteger('SpielfeldGroesse', 'RowCount', 4) * 9)
-    div 2) + 9;
+  ColCount := (Ini.ReadInteger('SpielfeldGroesse', 'ColCount', 64));
+  RowCount := (Ini.ReadInteger('SpielfeldGroesse', 'RowCount', 36));
 
-  InitialGameSpeed := 600 div Ini.ReadInteger('StartWerte',
-    'InitialGameSpeed', 4);
+  InitialGameSpeed := 360 div (Ini.ReadInteger('StartWerte',
+    'InitialGameSpeed', 4));
   TailLength := Ini.ReadInteger('StartWerte', 'TailLength', 3);
 
   StartX := Random(ColCount - 14) + 7;
