@@ -26,6 +26,10 @@ type
     procedure SetGameOver(const Value: Boolean);
     function GetED: TEntityDirection;
     procedure SetED(const Value: TEntityDirection);
+    ///<summary> Erstellt Schlange an zufaelligen Punkt, der frei ist</summary>
+    procedure SpawnSnake(var ASnake: TSnake);
+    ///<summary> Spielfeld wird erzeugt </summary>
+    procedure InitializeField();
   public
 
     constructor Create(AColCount, ARowCount: Integer);
@@ -51,12 +55,12 @@ uses
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
 
-var
-  i, j, k: Integer;
 
 begin
-  FSnake := TSnake.Create(settings.StartX, settings.StartY);
-
+  FColCount := AColCount;
+  FRowCount := ARowCount;
+  InitializeField();
+  SpawnSnake(FSnake);
   // Food auf Nullpointer setzen
   FFood := nil;
 
@@ -64,29 +68,6 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.Interval := settings.InitialGameSpeed;
   FTimer.OnTimer := DoProcess;
-
-  FColCount := AColCount;
-  FRowCount := ARowCount;
-
-  // Größe der Arrays initialisieren
-  SetLength(FSpielfeld, FColCount);
-  for i := 0 to FColCount - 1 do
-  begin
-    SetLength(FSpielfeld[i], FRowCount);
-  end;
-
-  // Raender befuellen (als Wand für die Spielwelt)
-  for k := 0 to FColCount - 1 do
-  begin
-    for j := 0 to FRowCount - 1 do
-    begin
-      if (k = 0) or (k = FColCount - 1) or (j = 0) or (j = FRowCount - 1) then
-      begin
-        Cells[k, j] := true;
-      end;
-    end;
-  end;
-
 end;
 
 destructor TGameEngine.Destroy;
@@ -120,6 +101,30 @@ end;
 function TGameEngine.GetValue(ACol, ARow: Integer): Boolean;
 begin
   result := FSpielfeld[ACol, ARow];
+end;
+
+procedure TGameEngine.InitializeField;
+var
+  i, j, k: Integer;
+begin
+  // Größe der Arrays initialisieren
+  SetLength(FSpielfeld, FColCount);
+  for i := 0 to FColCount - 1 do
+  begin
+    SetLength(FSpielfeld[i], FRowCount);
+  end;
+
+  // Raender befuellen (als Wand für die Spielwelt)
+  for k := 0 to FColCount - 1 do
+  begin
+    for j := 0 to FRowCount - 1 do
+    begin
+      if (k = 0) or (k = FColCount - 1) or (j = 0) or (j = FRowCount - 1) then
+      begin
+        Cells[k, j] := true;
+      end;
+    end;
+  end;
 end;
 
 procedure TGameEngine.Input(const Direction: TEntityDirection);
@@ -187,6 +192,18 @@ begin
     //platziert neues Futter
     PlaceFood;
   end;
+end;
+
+procedure TGameEngine.SpawnSnake(var ASnake: TSnake);
+var
+  X, Y: Integer;
+const
+  SPACING: Integer = 3;
+begin
+  X := Random(FColCount - SPACING * 2) + SPACING;
+  Y := Random(FRowCount - SPACING * 2) + SPACING;
+  //Todo fuer spaeter: Ueberpruefen ob Ort schon belegt
+  ASnake := TSnake.Create(X, Y);
 end;
 
 end.

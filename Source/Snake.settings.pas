@@ -21,7 +21,6 @@ type
 
   var
     ColCount, RowCount: Integer;
-    StartX, StartY: Integer;
     CellSize: Integer;
     TailLength: Integer;
     InitialGameSpeed: Integer;
@@ -81,8 +80,6 @@ begin
     'InitialGameSpeed', 4));
   TailLength := Ini.ReadInteger('StartWerte', 'TailLength', 3);
 
-  StartX := Random(ColCount - 14) + 7;
-  StartY := Random(RowCount - 8) + 4;
 end;
 
 class procedure TSettings.ReleaseInstance;
