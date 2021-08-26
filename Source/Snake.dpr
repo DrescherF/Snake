@@ -12,7 +12,9 @@ uses
   Snake.Snake in 'Snake.Snake.pas',
   Snake.Entity in 'Snake.Entity.pas',
   Snake.Food in 'Snake.Food.pas',
-  SSettings in 'OrdnerForms\SSettings.pas' {FormSettings};
+  SSettings in 'OrdnerForms\SSettings.pas' {FormSettings},
+  SHighScores in 'OrdnerForms\SHighScores.pas' {FormScoreBoard},
+  Snake.Data in 'Snake.Data.pas' {DataModuleSnake: TDataModule};
 
 {$R *.res}
 
@@ -25,5 +27,7 @@ begin
   Application.CreateForm(TFormSGame, FormSGame);
   Application.CreateForm(TFormGameOver, FormGameOver);
   Application.CreateForm(TFormSettings, FormSettings);
+  Application.CreateForm(TFormScoreBoard, FormScoreBoard);
+  Application.CreateForm(TDataModuleSnake, DataModuleSnake);
   Application.Run;
 end.

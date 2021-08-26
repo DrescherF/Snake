@@ -20,17 +20,6 @@ object FormSGame: TFormSGame
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object ImageBackground: TImage
-    Left = 0
-    Top = 0
-    Width = 1069
-    Height = 662
-    Align = alClient
-    ExplicitLeft = 408
-    ExplicitTop = 336
-    ExplicitWidth = 105
-    ExplicitHeight = 105
-  end
   object ImageScene: TImage
     Left = 0
     Top = 0

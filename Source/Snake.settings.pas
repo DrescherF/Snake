@@ -6,7 +6,7 @@ uses
   IniFiles;
 
 type
- /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
+  /// <summary> Einstellungen für das Spiel (z.B. groesse des Spielfeldes) </summary>
   TSettings = class
 
   strict private
@@ -19,11 +19,13 @@ type
     FColCount, FRowCount: Integer;
     FInitialGameSpeed: Integer;
     FInitialTailLength: Integer;
+    FPlayerName: String;
     FCellSize: Integer;
     procedure SetColCount(const Value: Integer);
     procedure SetRowCount(const Value: Integer);
     procedure SetInitialGameSpeed(const Value: Integer);
     procedure SetInitialTailLength(const Value: Integer);
+    procedure SetPlayerName(const Value: String);
   public
     const DEFAULT_COLCOUNT = 72;
     const DEFAULT_ROWCOUNT = 36;
@@ -37,6 +39,7 @@ type
     property RowCount: Integer read FRowCount write SetRowCount;
     property InitialGameSpeed: Integer read FInitialGameSpeed write SetInitialGameSpeed;
     property InitialTailLenght: Integer read FInitialTailLength write SetInitialTailLength;
+    property PlayerName: String read FPlayerName write SetPlayerName;
     property CellSize: Integer read FCellSize;
 
     class function GetInstance(): TSettings;
@@ -95,6 +98,8 @@ begin
   FInitialGameSpeed   := FIni.ReadInteger('StartWerte', 'InitialGameSpeed', DEFAULT_GAMESPEED);
   FInitialTailLength  := FIni.ReadInteger('StartWerte', 'TailLength', DEFAULT_TAILLENGHT);
 
+  FPlayerName         := FIni.ReadString('Spieler', 'LastPlayerName', '');
+
   FCellSize           := DEFAULT_CELLSIZE;
 end;
 
@@ -114,6 +119,12 @@ procedure TSettings.SetInitialTailLength(const Value: Integer);
 begin
   FInitialTailLength := Value;
   FIni.WriteInteger('StartWerte', 'TailLength', Value);
+end;
+
+procedure TSettings.SetPlayerName(const Value: String);
+begin
+  FPlayerName := Value;
+  FIni.WriteString('Spieler', 'LastPlayerName', Value);
 end;
 
 procedure TSettings.SetRowCount(const Value: Integer);

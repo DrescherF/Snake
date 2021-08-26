@@ -18,6 +18,7 @@ type
     FTimer: TTimer;
     FOnProcess: TNotifyEvent;
     FOnGameOver: TNotifyEvent;
+    FScore: Integer;
     function GetValue(ACol, ARow: Integer): Boolean;
     /// <summary>Schaut ob das Feld leer ist</summary>
     function FieldEmpty(ACol, ARow: Integer): Boolean;
@@ -26,9 +27,9 @@ type
     procedure SetGameOver(const Value: Boolean);
     function GetED: TEntityDirection;
     procedure SetED(const Value: TEntityDirection);
-    ///<summary> Erstellt Schlange an zufaelligen Punkt, der frei ist</summary>
+    /// <summary> Erstellt Schlange an zufaelligen Punkt, der frei ist</summary>
     procedure SpawnSnake(var ASnake: TSnake);
-    ///<summary> Spielfeld wird erzeugt </summary>
+    /// <summary> Spielfeld wird erzeugt </summary>
     procedure InitializeField();
   public
 
@@ -45,6 +46,7 @@ type
     property OnProcess: TNotifyEvent read FOnProcess write FOnProcess;
     property OnGameOver: TNotifyEvent read FOnGameOver write FOnGameOver;
     property GameOver: Boolean read FGameOver write SetGameOver;
+    property Score: Integer read FScore;
 
   end;
 
@@ -54,7 +56,6 @@ uses
   System.SysUtils;
 
 constructor TGameEngine.Create(AColCount, ARowCount: Integer);
-
 
 begin
   FColCount := AColCount;
@@ -179,17 +180,20 @@ var
 begin
 
   FSnake.Move;
-  //Ueberprueft ob Schlangenkopf mit Wand kollidiert
+  // Ueberprueft ob Schlangenkopf mit Wand kollidiert
   GameOver := (Cells[FSnake.X, FSnake.Y]);
 
-  //Ueberprueft ob Schlangenkopf mit eigenem Scweif kollidiert
+  // Ueberprueft ob Schlangenkopf mit eigenem Scweif kollidiert
   GameOver := GameOver or Snake.IntersectsWithTail(FSnake.Position);
 
   // Ueberprueft ob Schlangenkopf auf Futter liegt
   if FFood.Position = FSnake.Position then
   begin
+    //Schlange waechst
     FSnake.Grow(1);
-    //platziert neues Futter
+    //Score erhoehen
+    inc(FScore);
+    // platziert neues Futter
     PlaceFood;
   end;
 end;
@@ -202,7 +206,7 @@ const
 begin
   X := Random(FColCount - SPACING * 2) + SPACING;
   Y := Random(FRowCount - SPACING * 2) + SPACING;
-  //Todo fuer spaeter: Ueberpruefen ob Ort schon belegt
+  // Todo fuer spaeter: Ueberpruefen ob Ort schon belegt
   ASnake := TSnake.Create(X, Y);
 end;
 

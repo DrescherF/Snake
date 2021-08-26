@@ -55,6 +55,7 @@ object FormSMain: TFormSMain
       Align = alTop
       Caption = 'Leaderboard'
       TabOrder = 1
+      OnClick = ButtonHighScoresClick
     end
     object ButtonStart: TButton
       Left = 0

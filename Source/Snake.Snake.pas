@@ -12,27 +12,26 @@ type
     FTail: TList<TPoint>;
     /// <summary>Die Richtung in die sich die Snake das letzte mal erfolgreich bewegt hat</summary>
     FLastDirection: TEntityDirection;
-    /// <summary>Die Richtung in die sich die Snake nach der nächsten Bewegung drehen soll</summary>
+    /// <summary>Die Richtung in die sich die Snake nach der nï¿½chsten Bewegung drehen soll</summary>
     FNextDirection: TEntityDirection;
   protected
-    ///<summary> Richtung kann hier (nicht um 180Grad) geaendert werden </summary>
+    /// <summary> Richtung kann hier (nicht um 180Grad) geaendert werden </summary>
     procedure SetDirection(const Value: TEntityDirection); Override;
 
   public
     constructor Create(AX, AY: Integer); Override;
     destructor Destroy(); Override;
     procedure Move();
-    ///<summary> Schlange waechst beim Essen </summary>
+    /// <summary> Schlange waechst beim Essen </summary>
     procedure Grow(Value: Integer);
-    ///<summary> Schaut ob der Punkt auf der Schlange liegt </summary>
+    /// <summary> Schaut ob der Punkt auf der Schlange liegt </summary>
     function Intersects(Coord: TPoint): Boolean; Override;
-    ///<summary> Schaut ob der Punkt auf dem Schweif liegt </summary>
+    /// <summary> Schaut ob der Punkt auf dem Schweif liegt </summary>
     function IntersectsWithTail(Coord: TPoint): Boolean;
     property Tail: TList<TPoint> read FTail;
   end;
 
 implementation
-
 
 uses
   System.SysUtils, Snake.settings;
@@ -91,7 +90,7 @@ procedure TSnake.Move;
 begin
   // Postition des Kopfes zum Tail hinzufuegen
   FTail.Insert(0, FPosition);
-  // Letztes Tail Element Löschen
+  // Letztes Tail Element Lï¿½schen
   FTail.Delete(FTail.Count - 1);
   // Position Kopf bewegen
   case FDirection of
@@ -106,7 +105,7 @@ begin
   end;
   // FK 2021-08-26 - Steuerungsverbesserung
   // Nach erfolgreicher Bewegung die letzte Laufrichtung merken
-  // und die aktuelle Laufrichtung aus der nächsten Laufrichtung übertragen
+  // und die aktuelle Laufrichtung aus der nï¿½chsten Laufrichtung ï¿½bertragen
   FLastDirection := FDirection;
   FDirection := FNextDirection;
 end;
@@ -114,8 +113,8 @@ end;
 procedure TSnake.SetDirection(const Value: TEntityDirection);
 begin
   // FK 2021-08-26 - Steuerungsverbesserung
-  // Haben wir bereits eine Änderung der Laufrichtung vorgenommen
-  // dürfen wir nur noch die zukünftige Laufrichtung nach belieben ändern
+  // Haben wir bereits eine ï¿½nderung der Laufrichtung vorgenommen
+  // dï¿½rfen wir nur noch die zukï¿½nftige Laufrichtung nach belieben ï¿½ndern
   if (FLastDirection <> FDirection) then
   begin
     if (Value <> FDirection.Invert) then
@@ -127,8 +126,8 @@ begin
   begin
     FDirection := Value;
     // FK 2021-08-26 - Steuerungsverbesserung
-    // Wenn im Anschluss keine weitere Anweisung auf Richtungsänderung kommt,
-    // wollen wir, dass die Snake weiter in diese Richtung läuft
+    // Wenn im Anschluss keine weitere Anweisung auf Richtungsï¿½nderung kommt,
+    // wollen wir, dass die Snake weiter in diese Richtung lï¿½uft
     FNextDirection := FDirection;
   end;
 end;

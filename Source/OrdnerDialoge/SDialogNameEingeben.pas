@@ -8,12 +8,15 @@ uses
 
 type
   TFormSDialogNameEingeben = class(TForm)
-    Edit1: TEdit;
-    Button1: TButton;
+    EditNameEingeben: TEdit;
+    ButtonSpielStart: TButton;
+    LabelBanner: TLabel;
+    procedure ButtonSpielStartClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
-    { Private-Deklarationen }
+
   public
-    { Public-Deklarationen }
+
   end;
 
 var
@@ -21,6 +24,24 @@ var
 
 implementation
 
+uses
+  SGame, Snake.settings;
+
 {$R *.dfm}
+
+procedure TFormSDialogNameEingeben.ButtonSpielStartClick(Sender: TObject);
+begin
+  if (trim(EditNameEingeben.Text) <> '') then
+  begin
+    settings.PlayerName := EditNameEingeben.Text;
+    Close;
+    FormSGame.ShowModal;
+  end;
+end;
+
+procedure TFormSDialogNameEingeben.FormShow(Sender: TObject);
+begin
+  EditNameEingeben.Text := settings.PlayerName;
+end;
 
 end.

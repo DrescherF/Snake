@@ -104,21 +104,17 @@
         </DelphiCompile>
         <DCCReference Include="OrdnerForms\SMain.pas">
             <Form>FormSMain</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="OrdnerDialoge\SDialogNameEingeben.pas">
             <Form>FormSDialogNameEingeben</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="OrdnerForms\SGame.pas">
             <Form>FormSGame</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Snake.GameEngine.pas"/>
         <DCCReference Include="Snake.settings.pas"/>
         <DCCReference Include="OrdnerForms\SGameOver.pas">
             <Form>FormGameOver</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Snake.Types.pas"/>
         <DCCReference Include="Snake.Snake.pas"/>
@@ -126,7 +122,14 @@
         <DCCReference Include="Snake.Food.pas"/>
         <DCCReference Include="OrdnerForms\SSettings.pas">
             <Form>FormSettings</Form>
+        </DCCReference>
+        <DCCReference Include="OrdnerForms\SHighScores.pas">
+            <Form>FormScoreBoard</Form>
+        </DCCReference>
+        <DCCReference Include="Snake.Data.pas">
+            <Form>DataModuleSnake</Form>
             <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
