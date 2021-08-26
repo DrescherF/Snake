@@ -24,13 +24,18 @@ type
     procedure SetValue(ACol, ARow: Integer; const Value: Boolean);
     procedure DoProcess(Sender: TObject);
     procedure SetGameOver(const Value: Boolean);
+    function GetED: TEntityDirection;
+    procedure SetED(const Value: TEntityDirection);
   public
-    ED: Snake.Types.TEntityDirection;
+
     constructor Create(AColCount, ARowCount: Integer);
     destructor Destroy(); Override;
-    property Cells[ACol, ARow: Integer]: Boolean read GetValue write SetValue;
     procedure SnakeMove();
     procedure PlaceFood();
+    /// <summary>Überträgt die übergebene Richtung direkt an die Snake</summary>
+    procedure Input(const Direction: TEntityDirection);
+    { Properties }
+    property Cells[ACol, ARow: Integer]: Boolean read GetValue write SetValue;
     property Snake: TSnake read FSnake;
     property Food: TFood read FFood;
     property OnProcess: TNotifyEvent read FOnProcess write FOnProcess;
@@ -107,9 +112,19 @@ begin
   result := not FSnake.Intersects(Point(ACol, ARow));
 end;
 
+function TGameEngine.GetED: TEntityDirection;
+begin
+  result := FSnake.Direction;
+end;
+
 function TGameEngine.GetValue(ACol, ARow: Integer): Boolean;
 begin
   result := FSpielfeld[ACol, ARow];
+end;
+
+procedure TGameEngine.Input(const Direction: TEntityDirection);
+begin
+  FSnake.Direction := Direction;
 end;
 
 procedure TGameEngine.PlaceFood;
@@ -128,6 +143,11 @@ begin
   begin
     PlaceFood;
   end;
+end;
+
+procedure TGameEngine.SetED(const Value: TEntityDirection);
+begin
+  FSnake.Direction := Value;
 end;
 
 procedure TGameEngine.SetGameOver(const Value: Boolean);
@@ -153,7 +173,6 @@ var
 
 begin
 
-  FSnake.Direction := ED;
   FSnake.Move;
   //Ueberprueft ob Schlangenkopf mit Wand kollidiert
   GameOver := (Cells[FSnake.X, FSnake.Y]);

@@ -10,8 +10,10 @@ type
 
   private
     FTail: TList<TPoint>;
+    /// <summary>Die Richtung in die sich die Snake das letzte mal erfolgreich bewegt hat</summary>
     FLastDirection: TEntityDirection;
-
+    /// <summary>Die Richtung in die sich die Snake nach der nächsten Bewegung drehen soll</summary>
+    FNextDirection: TEntityDirection;
   protected
     ///<summary> Richtung kann hier (nicht um 180Grad) geaendert werden </summary>
     procedure SetDirection(const Value: TEntityDirection); Override;
@@ -40,6 +42,11 @@ uses
 constructor TSnake.Create(AX, AY: Integer);
 begin
   inherited Create(AX, AY);
+  // FK 2021-08-26 - Steuerungsverbesserung
+  // Durch die Erweiterung der TEntityDirection um edNone muss die
+  // Direction nun initialisiert werden, damit wir nicht stehen bleiben
+  FDirection := edRight;
+  FNextDirection := FDirection;
 
   FTail := TList<TPoint>.Create;
   // 2 Segmente hinzufuegen
@@ -97,25 +104,33 @@ begin
     edUp:
       Y := Y - 1;
   end;
+  // FK 2021-08-26 - Steuerungsverbesserung
+  // Nach erfolgreicher Bewegung die letzte Laufrichtung merken
+  // und die aktuelle Laufrichtung aus der nächsten Laufrichtung übertragen
+  FLastDirection := FDirection;
+  FDirection := FNextDirection;
 end;
 
 procedure TSnake.SetDirection(const Value: TEntityDirection);
 begin
-  case FLastDirection of
-    edRight:
-      if Value <> edLeft then
-        FDirection := Value;
-    edDown:
-      if Value <> edUp then
-        FDirection := Value;
-    edLeft:
-      if Value <> edRight then
-        FDirection := Value;
-    edUp:
-      if Value <> edDown then
-        FDirection := Value;
+  // FK 2021-08-26 - Steuerungsverbesserung
+  // Haben wir bereits eine Änderung der Laufrichtung vorgenommen
+  // dürfen wir nur noch die zukünftige Laufrichtung nach belieben ändern
+  if (FLastDirection <> FDirection) then
+  begin
+    if (Value <> FDirection.Invert) then
+      FNextDirection := Value;
+    exit;
   end;
-  FlastDirection := FDirection;
+
+  if (Value <> FDirection.Invert) then
+  begin
+    FDirection := Value;
+    // FK 2021-08-26 - Steuerungsverbesserung
+    // Wenn im Anschluss keine weitere Anweisung auf Richtungsänderung kommt,
+    // wollen wir, dass die Snake weiter in diese Richtung läuft
+    FNextDirection := FDirection;
+  end;
 end;
 
 end.
