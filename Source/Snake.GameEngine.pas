@@ -66,7 +66,7 @@ begin
 
   // Timer wird erzeugt und Tick Geschwindigkeit initalisiert
   FTimer := TTimer.Create(nil);
-  FTimer.Interval := settings.InitialGameSpeed;
+  FTimer.Interval := 360 div settings.InitialGameSpeed;
   FTimer.OnTimer := DoProcess;
 end;
 

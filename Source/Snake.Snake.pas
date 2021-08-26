@@ -50,7 +50,7 @@ begin
 
   FTail := TList<TPoint>.Create;
   // 2 Segmente hinzufuegen
-  Grow(Settings.TailLength);
+  Grow(Settings.InitialTailLenght);
 end;
 
 destructor TSnake.Destroy;
