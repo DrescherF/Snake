@@ -61,33 +61,25 @@ procedure TFormSettings.ButtonSettingsUebernehmenClick(Sender: TObject);
 var
   variable: Integer;
 begin
-  { variable := TrackBarColCount.Position;
-    settings.ini.WriteInteger('SpielfeldGroesse', 'ColCount', variable);
 
-    variable := TrackBarRowCount.Position;
-    settings.ini.WriteInteger('SpielfeldGroesse', 'RowCount', variable); }
 
-  settings.ini.WriteInteger('SpielfeldGroesse', 'ColCount', round(NumberBoxColCount.Value));
-  settings.ini.WriteInteger('SpielfeldGroesse', 'RowCount', round(NumberBoxRowCount.Value));
+  settings.ColCount := round(NumberBoxColCount.Value);
+  Settings.RowCount := round(NumberBoxRowCount.Value);
 
-  variable := TrackBarInitialGameSpeed.Position;
-  settings.ini.WriteInteger('StartWerte', 'InitialGamespeed', variable);
+  Settings.InitialGameSpeed := TrackBarInitialGameSpeed.Position;
+  Settings.InitialTailLenght := TrackBarTailLength.Position;
 
-  variable := TrackBarTailLength.Position;
-  settings.ini.WriteInteger('StartWerte', 'TailLength', variable);
-
-  settings.Refresh;
   Close;
 end;
 
 procedure TFormSettings.ButtonStandartWerteClick(Sender: TObject);
 begin
   ComboBoxSpielfeld.ItemIndex := 2;
-  NumberBoxColCount.Value := 72;
-  NumberBoxRowCount.Value := 36;
+  NumberBoxColCount.Value := Settings.DEFAULT_COLCOUNT;
+  NumberBoxRowCount.Value := Settings.DEFAULT_ROWCOUNT;
 
-  TrackBarInitialGameSpeed.Position := 3;
-  TrackBarTailLength.Position := 3;
+  TrackBarInitialGameSpeed.Position := Settings.DEFAULT_GAMESPEED;
+  TrackBarTailLength.Position := Settings.DEFAULT_TAILLENGHT;
 end;
 
 procedure TFormSettings.ComboBoxSpielfeldChange(Sender: TObject);
@@ -103,20 +95,12 @@ begin
 end;
 
 procedure TFormSettings.FormShow(Sender: TObject);
-var
-  variable: Integer;
 begin
-  variable := settings.ini.ReadInteger('SpielfeldGroesse', 'ColCount', 4);
-  NumberBoxColCount.Value := variable;
+  NumberBoxColCount.Value := Settings.ColCount;
+  NumberBoxRowCount.Value := Settings.RowCount;
 
-  variable := settings.ini.ReadInteger('SpielfeldGroesse', 'RowCount', 4);
-  NumberBoxRowCount.Value := variable;
-
-  variable := settings.ini.ReadInteger('StartWerte', 'InitialGamespeed', 4);
-  TrackBarInitialGameSpeed.Position := variable;
-
-  variable := settings.ini.ReadInteger('StartWerte', 'TailLength', 3);
-  TrackBarTailLength.Position := variable;
+  TrackBarInitialGameSpeed.Position := Settings.InitialGameSpeed;
+  TrackBarTailLength.Position := Settings.InitialTailLenght;
 end;
 
 procedure TFormSettings.TrackBarInitialGameSpeedChange(Sender: TObject);
