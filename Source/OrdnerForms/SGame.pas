@@ -133,13 +133,13 @@ begin
     VK_ESCAPE:
       Close; // Todo Menue Form aufrufen
     VK_RIGHT:
-        FGameEngine.ED := edRight;
+        FGameEngine.Input(edRight);
     VK_DOWN:
-        FGameEngine.ED := edDown;
+        FGameEngine.Input(edDown);
     VK_LEFT:
-        FGameEngine.ED := edLeft;
+        FGameEngine.Input(edLeft);
     VK_UP:
-        FGameEngine.ED := edUp;
+        FGameEngine.Input(edUp);
   end;
 
 end;
@@ -148,13 +148,13 @@ procedure TFormSGame.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   case Key of
     'd':
-        FGameEngine.ED := edRight;
+        FGameEngine.Input(edRight);
     's':
-        FGameEngine.ED := edDown;
+        FGameEngine.Input(edDown);
     'a':
-        FGameEngine.ED := edLeft;
+        FGameEngine.Input(edLeft);
     'w':
-        FGameEngine.ED := edUp;
+        FGameEngine.Input(edUp);
   end;
 end;
 
