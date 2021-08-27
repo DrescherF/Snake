@@ -22,12 +22,12 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDataModuleSnake, DataModuleSnake);
   Application.CreateForm(TFormSMain, FormSMain);
   Application.CreateForm(TFormSDialogNameEingeben, FormSDialogNameEingeben);
   Application.CreateForm(TFormSGame, FormSGame);
   Application.CreateForm(TFormGameOver, FormGameOver);
   Application.CreateForm(TFormSettings, FormSettings);
   Application.CreateForm(TFormScoreBoard, FormScoreBoard);
-  Application.CreateForm(TDataModuleSnake, DataModuleSnake);
   Application.Run;
 end.

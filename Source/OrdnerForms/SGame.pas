@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids,
-  Snake.GameEngine, Snake.Settings, SGameOver, Snake.Types;
+  Snake.GameEngine, Snake.Settings, SGameOver, Snake.Types, Snake.Data;
 
 type
   TFormSGame = class(TForm)
@@ -239,6 +239,8 @@ end;
 
 procedure TFormSGame.GameEngineOnGameOver(Sender: TObject);
 begin
+  //Datenbank HighScores beschreiben
+  DataModuleSnake.AddHighScore(Settings.PlayerName, FGameEngine.Score);
   // GameOver anzeigen und SGame mit ModalReasult schliessen
   modalResult := FormGameOver.ShowModal;
 end;
