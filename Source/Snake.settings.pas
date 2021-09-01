@@ -12,7 +12,6 @@ type
   strict private
     class var FInstance: TSettings;
     constructor Create(); reintroduce;
-    destructor Destroy(); Override;
 
   private
     FIni: TInifile;
@@ -27,6 +26,8 @@ type
     procedure SetInitialTailLength(const Value: Integer);
     procedure SetPlayerName(const Value: String);
   public
+    destructor Destroy(); Override;
+
     const DEFAULT_COLCOUNT = 72;
     const DEFAULT_ROWCOUNT = 36;
     const DEFAULT_GAMESPEED = 4;

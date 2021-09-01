@@ -45,10 +45,8 @@ begin
 end;
 
 procedure TFormSMain.ButtonSettingsClick(Sender: TObject);
-var
-  modalResult: Integer;
 begin
-  modalResult := FormSettings.ShowModal;
+  FormSettings.ShowModal;
 end;
 
 procedure TFormSMain.ButtonStartClick(Sender: TObject);

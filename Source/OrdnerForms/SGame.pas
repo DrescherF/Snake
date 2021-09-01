@@ -20,8 +20,7 @@ type
     FGameEngine: TGameEngine;
     FBitmapBackground: TBitmap;
     procedure FillTile(Canvas: TCanvas; X, Y: Integer; Offset: Integer = 0);
-    procedure FillEyes(Canvas: TCanvas; X, Y: Integer;
-      Direction: TEntityDirection);
+    //procedure FillEyes(Canvas: TCanvas; X, Y: Integer;
     procedure GameEngineOnProcess(Sender: TObject);
     procedure GameEngineOnGameOver(Sender: TObject);
     procedure DrawBackground;
@@ -161,7 +160,7 @@ begin
 end;
 
 // ToDo // Noch voellig kaputt
-procedure TFormSGame.FillEyes(Canvas: TCanvas; X, Y: Integer;
+{procedure TFormSGame.FillEyes(Canvas: TCanvas; X, Y: Integer;
   Direction: TEntityDirection);
 begin
   case Direction of
@@ -176,7 +175,7 @@ begin
     edUp:
       ;
   end;
-end;
+end; }
 
 procedure TFormSGame.FillTile(Canvas: TCanvas; X, Y: Integer;
   Offset: Integer = 0);

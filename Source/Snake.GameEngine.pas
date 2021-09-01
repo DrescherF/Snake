@@ -25,8 +25,6 @@ type
     procedure SetValue(ACol, ARow: Integer; const Value: Boolean);
     procedure DoProcess(Sender: TObject);
     procedure SetGameOver(const Value: Boolean);
-    function GetED: TEntityDirection;
-    procedure SetED(const Value: TEntityDirection);
     /// <summary> Erstellt Schlange an zufaelligen Punkt, der frei ist</summary>
     procedure SpawnSnake(var ASnake: TSnake);
     /// <summary> Spielfeld wird erzeugt </summary>
@@ -94,11 +92,6 @@ begin
   result := not FSnake.Intersects(Point(ACol, ARow));
 end;
 
-function TGameEngine.GetED: TEntityDirection;
-begin
-  result := FSnake.Direction;
-end;
-
 function TGameEngine.GetValue(ACol, ARow: Integer): Boolean;
 begin
   result := FSpielfeld[ACol, ARow];
@@ -151,11 +144,6 @@ begin
   end;
 end;
 
-procedure TGameEngine.SetED(const Value: TEntityDirection);
-begin
-  FSnake.Direction := Value;
-end;
-
 procedure TGameEngine.SetGameOver(const Value: Boolean);
 begin
   if FGameOver = Value then
@@ -174,9 +162,6 @@ begin
 end;
 
 procedure TGameEngine.SnakeMove;
-var
-  i: Integer;
-
 begin
 
   FSnake.Move;

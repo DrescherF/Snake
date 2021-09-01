@@ -58,8 +58,6 @@ begin
 end;
 
 procedure TFormSettings.ButtonSettingsUebernehmenClick(Sender: TObject);
-var
-  variable: Integer;
 begin
 
 

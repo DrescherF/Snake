@@ -24,7 +24,13 @@ object DataModuleSnake: TDataModuleSnake
         Name = 'Date'
         DataType = ftDate
       end>
-    IndexDefs = <>
+    IndexDefs = <
+      item
+        Name = 'ScoreIndex'
+        Fields = 'Score'
+        Options = [ixDescending]
+      end>
+    IndexName = 'ScoreIndex'
     Params = <>
     StoreDefs = True
     Left = 296
