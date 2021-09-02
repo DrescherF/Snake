@@ -1,9 +1,10 @@
 object FormGameOver: TFormGameOver
   Left = 0
   Top = 0
-  Caption = 'FormGameOver'
-  ClientHeight = 470
-  ClientWidth = 745
+  BorderStyle = bsDialog
+  Caption = 'Snake Game Over'
+  ClientHeight = 480
+  ClientWidth = 755
   Color = clBackground
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

@@ -2,7 +2,7 @@ object FormSGame: TFormSGame
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'FormSGame'
+  Caption = 'Snake Game'
   ClientHeight = 662
   ClientWidth = 1069
   Color = clBtnFace

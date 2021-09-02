@@ -1,9 +1,10 @@
 object FormScoreBoard: TFormScoreBoard
   Left = 0
   Top = 0
-  Caption = 'FormScoreBoard'
-  ClientHeight = 629
-  ClientWidth = 381
+  BorderStyle = bsDialog
+  Caption = 'Snake Game Leaderboard'
+  ClientHeight = 639
+  ClientWidth = 391
   Color = clBackground
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

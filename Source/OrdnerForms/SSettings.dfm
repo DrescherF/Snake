@@ -1,9 +1,10 @@
 object FormSettings: TFormSettings
   Left = 0
   Top = 0
-  Caption = 'FormSettings'
-  ClientHeight = 658
-  ClientWidth = 479
+  BorderStyle = bsDialog
+  Caption = 'Snake Game Settings'
+  ClientHeight = 668
+  ClientWidth = 489
   Color = clBackground
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

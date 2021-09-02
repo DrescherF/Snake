@@ -1,9 +1,10 @@
 object FormSDialogNameEingeben: TFormSDialogNameEingeben
   Left = 0
   Top = 0
-  Caption = 'FormSDialogNameEingeben'
-  ClientHeight = 299
-  ClientWidth = 635
+  BorderStyle = bsDialog
+  Caption = 'Snake Game Name Eintragen'
+  ClientHeight = 309
+  ClientWidth = 645
   Color = clBackground
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +13,7 @@ object FormSDialogNameEingeben: TFormSDialogNameEingeben
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  Visible = True
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

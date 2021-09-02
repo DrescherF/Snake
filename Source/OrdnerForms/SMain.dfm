@@ -2,10 +2,10 @@ object FormSMain: TFormSMain
   Left = 0
   Top = 0
   ActiveControl = ButtonStart
-  BorderStyle = bsSizeToolWin
-  Caption = 'FormSMain'
-  ClientHeight = 501
-  ClientWidth = 384
+  BorderStyle = bsDialog
+  Caption = 'Snake Game Main Menu'
+  ClientHeight = 511
+  ClientWidth = 394
   Color = clBackground
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
