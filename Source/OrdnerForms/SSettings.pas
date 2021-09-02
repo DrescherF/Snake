@@ -10,31 +10,52 @@ uses
 
 type
   TFormSettings = class(TForm)
-    TrackBarInitialGameSpeed: TTrackBar;
-    TrackBarTailLength: TTrackBar;
+    /// <summary> Ueberschrift der Form</summary>
     LabelHeadlineSettings: TLabel;
-    LabelTrackBarTailLength: TLabel;
-    LabelInitialGamesSpeed: TLabel;
+    /// <summary> Ueberschrift Bereich Startwerte</summary>
     LabelStartWerte: TLabel;
-    LabelTrackbarInitialGameSpeed: TLabel;
-    PanelSpielfeldGroesseSettings: TPanel;
-    LabelSpielfeldGroesse: TLabel;
+    /// <summary> Bereich Startwerte</summary>
     PanelStartWerte: TPanel;
+
+    /// <summary> Einsellung Spielgeschwindigkeit</summary>
+    TrackBarInitialGameSpeed: TTrackBar;
+    LabelInitialGamesSpeed: TLabel;
     PanelInitialGameSpeed: TPanel;
-    PanelTailLength: TPanel;
+    LabelTrackbarInitialGameSpeed: TLabel;
+
+    /// <summary> Einstellung Schweiflaenge zu Beginn des Spiels</summary>
+    TrackBarTailLength: TTrackBar;
     LabelTailLength: TLabel;
-    ButtonSettingsUebernehmen: TButton;
-    ButtonCancel: TButton;
-    ComboBoxSpielfeld: TComboBox;
+    PanelTailLength: TPanel;
+    LabelTrackBarTailLength: TLabel;
+
+    /// <summary> Einstellung Spielfeldgroesse (Hoehe und Breite)</summary>
+    LabelSpielfeldGroesse: TLabel;
+    PanelSpielfeldGroesseSettings: TPanel;
     NumberBoxColCount: TNumberBox;
     NumberBoxRowCount: TNumberBox;
+    ComboBoxSpielfeld: TComboBox;
+
+    /// <summary> ButtonSettingsUebernehmenClick</summary>
+    ButtonSettingsUebernehmen: TButton;
+    /// <summary> ButtonCancelClick</summary>
+    ButtonCancel: TButton;
+    /// <summary> ButtonStandartWerteClick</summary>
     ButtonStandartWerte: TButton;
+
+    /// <summary> Schliesst die Form ohne die Eintellungen zu Uebernehmen</summary>
     procedure ButtonCancelClick(Sender: TObject);
+    /// <summary> Schliesst die Form und speichert die Einstellungen, sodass sie beim naechsten Spielstart angewandt werden</summary>
     procedure ButtonSettingsUebernehmenClick(Sender: TObject);
+    /// <summary> Stellt Einstellungen in Labels und Trackbars ein, wenn bereits vorhanden</summary>
     procedure FormShow(Sender: TObject);
+    /// <summary> Combobox fuer Auswahl verschiedener Vorgegebener Spielfeldgroessen</summary>
     procedure ComboBoxSpielfeldChange(Sender: TObject);
+    /// <summary> Zwischen 10 verschiedenen Spielgeschwindigkeiten zu waehlen</summary>
     procedure TrackBarInitialGameSpeedChange(Sender: TObject);
+    /// <summary> Laenge der Schlange zu beginn des Spiels zwischen 1 und 10 zu bestimmen</summary>
     procedure TrackBarTailLengthChange(Sender: TObject);
+    /// <summary> Voreingestellte Standartwerte einstellen (wird noch nicht gespeichert)</summary>
     procedure ButtonStandartWerteClick(Sender: TObject);
   private
     { Private-Deklarationen }

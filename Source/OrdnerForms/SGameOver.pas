@@ -9,8 +9,11 @@ uses
 
 type
   TFormGameOver = class(TForm)
+    /// <summary> Formueberschrift</summary>
     LabelGameOver: TLabel;
+    /// <summary> BackToMainClick</summary>
     BackToMain: TButton;
+    /// <summary> Schliesst diese Form und oeffnet FormSMain</summary>
     procedure BackToMainClick(Sender: TObject);
   private
     { Private-Deklarationen }

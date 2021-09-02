@@ -12,21 +12,26 @@ uses
 type
   THackedDBGrid = class(TDBGrid)
   protected
+    /// <summary> Entfernt die Scroll Bar aus dem DBGrid</summary>
     procedure UpdateScrollBar; override;
   end;
 
 type
   TFormScoreBoard = class(TForm)
+
+    /// <summary> Ueberschrift der Form</summary>
     LabelBanner: TLabel;
+    /// <summary> Bereich fuer FHackeDBGrid</summary>
     PanelGrid: TPanel;
+    /// <summary> Referenz DBGrid fuer die Einstellungen des FHackeDBGrid</summary>
     DBGrid1: TDBGrid;
+    /// <summary> Eintellunen duer das HackeDBGrid hier</summary>
     procedure FormCreate(Sender: TObject);
   private
     FHackeDBGrid: THackedDBGrid;
+    /// <summary> HackeDBGrid bekommt Dark Mode</summary>
     procedure HagridDrawDataCell(Sender: TObject; const Rect: TRect;
       Field: TField; State: TGridDrawState);
-  public
-    { Public-Deklarationen }
   end;
 
 var
@@ -65,7 +70,7 @@ end;
 
 procedure THackedDBGrid.UpdateScrollBar;
 begin
-  // Nothing to do here...
+  Self.ScrollBars := ssNone;
 end;
 
 end.

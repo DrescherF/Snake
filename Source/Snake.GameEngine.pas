@@ -11,39 +11,61 @@ type
 
   private
     FSpielfeld: Array of Array of Boolean;
+    /// <summary> Objekt FSnake vom Type TSnake(TEntity) </summary>
     FSnake: TSnake;
+    /// <summary> Boolean Wert GameOver. Wenn true, dann SGame beenden und SGameOverStarten</summary>
     FGameOver: Boolean;
+    /// <summary> Objekt FFood vom Type TFood(TEntity)</summary>
     FFood: TFood;
+    /// <summary> Anzahl Spalten und Reihen Spielfeld</summary>
     FColCount, FRowCount: Integer;
+    /// <summary> Timer nach dessen Tick Geschwindigkeit sich die Bewegung auf dem Spielfeld richtet</summary>
     FTimer: TTimer;
+    /// <summary> NotifyEvent, dass TFormSGame.GameEngineOnProcess ausloest </summary>
     FOnProcess: TNotifyEvent;
+    /// <summary> NotifyEvent, dass TFormSGame.GameEngineOnGameOver ausloest</summary>
     FOnGameOver: TNotifyEvent;
+    /// <summary> Variable fuer den Score des aktuellen Spiels</summary>
     FScore: Integer;
+
+    /// <summary> Gibt Wert von FSpielfeld wieder bei den angegebenen x und y Wertes </summary>
     function GetValue(ACol, ARow: Integer): Boolean;
-    /// <summary>Schaut ob das Feld leer ist</summary>
+    /// <summary> Schaut ob das Feld leer ist</summary>
     function FieldEmpty(ACol, ARow: Integer): Boolean;
+
+    /// <summary> Setzt Wert von FSpielfeld bei den angegebenen x und y Wertes</summary>
     procedure SetValue(ACol, ARow: Integer; const Value: Boolean);
+    /// <summary> Bewegt Schlange und loest FOnProcess aus</summary>
     procedure DoProcess(Sender: TObject);
+    /// <summary> Setzt das spiel GameOver bei entsprechendem FGameOver Wert</summary>
     procedure SetGameOver(const Value: Boolean);
     /// <summary> Erstellt Schlange an zufaelligen Punkt, der frei ist</summary>
     procedure SpawnSnake(var ASnake: TSnake);
     /// <summary> Spielfeld wird erzeugt </summary>
     procedure InitializeField();
   public
-
     constructor Create(AColCount, ARowCount: Integer);
     destructor Destroy(); Override;
+    /// <summary> laesst Schlange bewegen und auf Kolliedierungen pruefen</summary>
     procedure SnakeMove();
+    /// <summary> Spawned Food an einer zufaelligen freien Koordinate</summary>
     procedure PlaceFood();
-    /// <summary>Überträgt die übergebene Richtung direkt an die Snake</summary>
+    /// <summary> Überträgt die übergebene Richtung direkt an die Snake</summary>
     procedure Input(const Direction: TEntityDirection);
     { Properties }
+    /// <summary> Entkapselt Felder des FSpielfeld</summary>
     property Cells[ACol, ARow: Integer]: Boolean read GetValue write SetValue;
+    /// <summary> Oeffentlicher Lesezugriff auf FSnake</summary>
     property Snake: TSnake read FSnake;
+    /// <summary> Oeffentlicher Lesezugriff auf FFood</summary>
     property Food: TFood read FFood;
+    /// <summary> Entkapselt FOnProcess</summary>
     property OnProcess: TNotifyEvent read FOnProcess write FOnProcess;
+    /// <summary> Entkapselt FOnGameOver</summary>
     property OnGameOver: TNotifyEvent read FOnGameOver write FOnGameOver;
+    /// <summary> Entkapselt FGamerOver und setzt Setter</summary>
     property GameOver: Boolean read FGameOver write SetGameOver;
+    /// <summary> Oeffentlicher Lesezugriff auf FScore</summary>
     property Score: Integer read FScore;
 
   end;

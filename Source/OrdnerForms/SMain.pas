@@ -11,16 +11,28 @@ uses
 
 type
   TFormSMain = class(TForm)
+    /// <summary> ButtonStartClick</summary>
     ButtonStart: TButton;
+    /// <summary> ButtonHighScoresClick</summary>
     ButtonHighScores: TButton;
+    /// <summary> Beendet bei Click das Programm</summary>
     ButtonClose: TButton;
+    /// <summary> Bereich fuer Buttons</summary>
     Panel1: TPanel;
+    /// <summary> ruft bei Click FormSettings auf</summary>
     ButtonSettings: TButton;
+    /// <summary> Ueberschrift 'Snake Game'</summary>
     LabelBanner: TLabel;
-    procedure ButtonStartClick(Sender: TObject);
-    procedure ButtonCloseClick(Sender: TObject);
+
+
     procedure FormDestroy(Sender: TObject);
+    /// <summary> ruft FormSDialogNameEingeben auf</summary>
+    procedure ButtonStartClick(Sender: TObject);
+    /// <summary> Beendet das Programm</summary>
+    procedure ButtonCloseClick(Sender: TObject);
+    /// <summary> ruft FormSettings auf</summary>
     procedure ButtonSettingsClick(Sender: TObject);
+    /// <summary> ruft FormScoreBoard auf</summary>
     procedure ButtonHighScoresClick(Sender: TObject);
   private
     FGameEngine: TGameEngine;

@@ -2,6 +2,7 @@ object FormSMain: TFormSMain
   Left = 0
   Top = 0
   ActiveControl = ButtonStart
+  BorderStyle = bsSizeToolWin
   Caption = 'FormSMain'
   ClientHeight = 501
   ClientWidth = 384
@@ -12,6 +13,7 @@ object FormSMain: TFormSMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13

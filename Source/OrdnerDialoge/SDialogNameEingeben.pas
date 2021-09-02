@@ -8,15 +8,18 @@ uses
 
 type
   TFormSDialogNameEingeben = class(TForm)
+
+    /// <summary> Edit zum Namen Eingeben, der im Spiel Angezeigt wird und der mit dem Score gespeicher wird</summary>
     EditNameEingeben: TEdit;
+    /// <summary> ButtonSpielStartClick</summary>
     ButtonSpielStart: TButton;
+    /// <summary> Ueberschrift der Form</summary>
     LabelBanner: TLabel;
+
+    /// <summary> ruft FormSGame auf</summary>
     procedure ButtonSpielStartClick(Sender: TObject);
+    /// <summary> Erstellt Form. Gibt letzten PlayerName in EditNameEingeben an</summary>
     procedure FormShow(Sender: TObject);
-  private
-
-  public
-
   end;
 
 var

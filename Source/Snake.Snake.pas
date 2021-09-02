@@ -1,4 +1,4 @@
-unit Snake.Snake;
+﻿unit Snake.Snake;
 
 interface
 
@@ -9,18 +9,22 @@ type
   TSnake = class(TEntity)
 
   private
+    /// <summary> Liste von Schweifelementen mit jeweilieger Position</summary>
     FTail: TList<TPoint>;
-    /// <summary>Die Richtung in die sich die Snake das letzte mal erfolgreich bewegt hat</summary>
+    /// <summary> Die Richtung in die sich die Snake das letzte mal erfolgreich bewegt hat</summary>
     FLastDirection: TEntityDirection;
-    /// <summary>Die Richtung in die sich die Snake nach der n�chsten Bewegung drehen soll</summary>
+    /// <summary> Die Richtung in die sich die Snake nach der naechsten Bewegung drehen soll</summary>
     FNextDirection: TEntityDirection;
   protected
     /// <summary> Richtung kann hier (nicht um 180Grad) geaendert werden </summary>
     procedure SetDirection(const Value: TEntityDirection); Override;
 
   public
+    /// <summary> Ueberschreibt Konstruktor von TEntity</summary>
     constructor Create(AX, AY: Integer); Override;
+    /// <summary> Ueberschreibt Destruktor von TEntity</summary>
     destructor Destroy(); Override;
+    /// <summary> Bewegt die Schlange in die FDirection und zieht den Schweif hinterher</summary>
     procedure Move();
     /// <summary> Schlange waechst beim Essen </summary>
     procedure Grow(Value: Integer);
@@ -28,6 +32,7 @@ type
     function Intersects(Coord: TPoint): Boolean; Override;
     /// <summary> Schaut ob der Punkt auf dem Schweif liegt </summary>
     function IntersectsWithTail(Coord: TPoint): Boolean;
+    /// <summary> Entkapselt die Lesbarkeit von FTail</summary>
     property Tail: TList<TPoint> read FTail;
   end;
 
@@ -48,7 +53,7 @@ begin
   FNextDirection := FDirection;
 
   FTail := TList<TPoint>.Create;
-  // 2 Segmente hinzufuegen
+  //Segmente hinzufuegen
   Grow(Settings.InitialTailLenght);
 end;
 
@@ -90,7 +95,7 @@ procedure TSnake.Move;
 begin
   // Postition des Kopfes zum Tail hinzufuegen
   FTail.Insert(0, FPosition);
-  // Letztes Tail Element L�schen
+  // Letztes Tail Element Loeschen
   FTail.Delete(FTail.Count - 1);
   // Position Kopf bewegen
   case FDirection of

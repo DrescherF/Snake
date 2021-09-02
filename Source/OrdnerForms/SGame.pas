@@ -10,20 +10,30 @@ uses
 
 type
   TFormSGame = class(TForm)
+    /// <summary> Szene fuer </summary>
     ImageScene: TImage;
+    /// <summary> liest Pfeiltasten ein und ruft passend FGameEngine.Input auf / Schliesst Programm aus ESC</summary>
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    /// <summary> Erstellt Form nach groesse / laesst Peilefeld malen und Platziert Schlange sowie Food</summary>
     procedure FormShow(Sender: TObject);
+    /// <summary> Schliesst BitmMap, befreit GameEngine, Schliesst Form</summary>
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    /// <summary> liest WASD ein und ruft passend FGameEngine.Input auf</summary>
     procedure FormKeyPress(Sender: TObject; var Key: Char);
 
   private
     FGameEngine: TGameEngine;
     FBitmapBackground: TBitmap;
+    /// <summary> Zeichnet Rechteck an eine Bestimme Koordinate</summary>
     procedure FillTile(Canvas: TCanvas; X, Y: Integer; Offset: Integer = 0);
     //procedure FillEyes(Canvas: TCanvas; X, Y: Integer;
+    /// <summary> wenn ausgeloest -> DrawScene()</summary>
     procedure GameEngineOnProcess(Sender: TObject);
+    /// <summary> Beschreibt Datenbank, Oeffnet FormGameOver</summary>
     procedure GameEngineOnGameOver(Sender: TObject);
+    /// <summary> Malt das Spielfeld</summary>
     procedure DrawBackground;
+    /// <summary> Malt die Entitys</summary>
     procedure DrawScene;
 
   const
@@ -53,11 +63,11 @@ procedure TFormSGame.DrawBackground;
 var
   i, j: Integer;
 begin
-  // evtl. bestehenden BAckground wieder freigeben
+  // evtl. bestehenden Background wieder freigeben
   FreeAndNil(FBitmapBackground);
-  // Neus BackgroundImage erzeugen
+  // Neues BackgroundImage erzeugen
   FBitmapBackground := TBitmap.Create();
-  // Größe vom Image dem Spielfeld anpassen
+  // Groesse vom Image dem Spielfeld anpassen
   FBitmapBackground.Width := Settings.ColCount * Settings.CellSize;
   FBitmapBackground.Height := Settings.RowCount * Settings.CellSize;
 
@@ -66,7 +76,7 @@ begin
   begin
     brush.Color := clblack;
     fillrect(rect(0, 0, Width, Height));
-    // waende zeichnen
+    // Waende zeichnen
     brush.Color := clgray;
     for i := 0 to Settings.ColCount - 1 do
     begin
@@ -193,10 +203,10 @@ end;
 procedure TFormSGame.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  // Pfeiltasten einlesen
   case Key of
     VK_ESCAPE:
       Close; // Todo Menue Form aufrufen
+    // Pfeiltasten einlesen
     VK_RIGHT:
       FGameEngine.Input(edRight);
     VK_DOWN:

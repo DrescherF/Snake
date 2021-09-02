@@ -10,6 +10,7 @@ type
 
   private
     FIcon: String;
+    /// <summary> Setzt ein Zufaelliges Icon fuer die Food Entity</summary>
     procedure RandomIcon;
 
   const
@@ -17,7 +18,9 @@ type
       '🧀', '🥐', '🍙'];
 
   public
+    /// <summary> Ergaenst Konstruktor von TEntity um RandomIcon()</summary>
     constructor Create(AX, AY: Integer); Override;
+    /// <summary> Entkapselt Lesezugriff von FIcon</summary>
     property Icon: String read FIcon;
   end;
 
