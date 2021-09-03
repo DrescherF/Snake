@@ -13,7 +13,6 @@ object FormSDialogNameEingeben: TFormSDialogNameEingeben
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  Visible = True
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
